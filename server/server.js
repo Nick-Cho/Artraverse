@@ -26,7 +26,7 @@ app.use(cors({
   origin: ['http://localhost:3000']
 })); 
 
-//Loading Routes
+//Loading Routes by using readdirSync to go through every file in the routes folder
 readdirSync('./routes').map((r)=>{ 
   app.use('/api', require(`./routes/${r}`))
 });
