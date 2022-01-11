@@ -29,12 +29,12 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  about:{},
+  about:{type: String},
   photo:{type: String},
-  following: [{type: Schema.ObjectID, ref: "User"}],
-  followers: [{type: Schema.ObjectID, ref: "User"}],
-
-}, {timestamps: true}
+  //following: [{type: Schema.ObjectID, ref: "User"}],
+  //followers: [{type: Schema.ObjectID, ref: "User"}],
+},
+{timestamps: true}
 );
 
 export default mongoose.model('User', userSchema);

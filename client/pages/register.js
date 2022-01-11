@@ -1,26 +1,32 @@
 import {useState} from "react"
 import axios from 'axios';
+import { toast } from "react-toastify";
+import {Modal} from "antd";
+import Link from 'next/link'
 const Register = () => {
   const [fname, setFname] = useState(''); 
   const [lname, setLname] = useState(''); 
   const [email, setEmail] = useState('');
   const [pswd, setPswd] = useState(''); 
   const [secret, setSecret] = useState('');  //This variable holds the answer to the password recovery question
-
-  const handleSubmit = e =>{
+  const [ok, setOk] = useState(false); //Variable is used to hold the value of whether a use was succesfully registered or not 
+  const handleSubmit = async (e) =>{
     e.preventDefault(); //prevents browser from reloading
     // console.log(fname, lname, email, pswd, secret)
-    axios.post('http://localhost:8000/api/register', {
+    try{
+      const {data} = await axios.post('http://localhost:8000/api/register', {
       fname,
       lname,
       email,
       pswd,
       secret,
-    })
-    .then((res)=>{
-      console.log(res)    
-    })
-    .catch(err => console.log(err))
+      });
+      setOk(data.ok);
+    } catch (err){
+      toast.error(err.response.data)
+    }
+    
+    
   }
   return (
     <div className = 'container-fluid'>
@@ -54,7 +60,7 @@ const Register = () => {
             <div className = 'form group p-2'>
               <input value = {pswd} type = "password" className = 'form-control' placeHolder="Password" onChange = {(e) => setPswd(e.target.value)}/>
               <small className = 'form-text text-muted'>
-                Use a mix of letters, numbers and symbols
+                Password must be at least 6 characters with. Use a mix of letters, numbers and symbols
               </small>
             </div>
 
@@ -79,6 +85,19 @@ const Register = () => {
             </div>
             
           </form>
+        </div>
+      </div>
+
+      <div className ="row">
+        <div className = "col">
+          <Modal title = "Congratulations" visible = {ok} onCancel = {()=>{setOk(false)}} footer = {null}>
+            <p>
+              Succesfully registered!
+            </p>
+            <Link href = "/login">
+              <a className = "btn btn-primary btn-sm">Login</a>
+            </Link>
+          </Modal>
         </div>
       </div>
     </div>
