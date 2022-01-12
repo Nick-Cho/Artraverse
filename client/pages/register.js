@@ -2,7 +2,8 @@ import {useState} from "react"
 import axios from 'axios';
 import { toast } from "react-toastify";
 import {Modal} from "antd";
-import Link from 'next/link'
+import Link from 'next/link';
+import {SyncOutlined} from "@ant-design/icons";
 const Register = () => {
   const [fname, setFname] = useState(''); 
   const [lname, setLname] = useState(''); 
@@ -10,22 +11,30 @@ const Register = () => {
   const [pswd, setPswd] = useState(''); 
   const [secret, setSecret] = useState('');  //This variable holds the answer to the password recovery question
   const [ok, setOk] = useState(false); //Variable is used to hold the value of whether a use was succesfully registered or not 
+  const [loading, setLoading] = useState(false);
   const handleSubmit = async (e) =>{
     e.preventDefault(); //prevents browser from reloading
     // console.log(fname, lname, email, pswd, secret)
+    setLoading(true);
     try{
-      const {data} = await axios.post('http://localhost:8000/api/register', {
+      const {data} = await axios.post(`http://localhost:8000/api/register`, {
       fname,
       lname,
       email,
       pswd,
       secret,
       });
+      setFname("");
+      setLname("")
+      setEmail("");
+      setPswd("");
+      setSecret("");
       setOk(data.ok);
+      setLoading(false);
     } catch (err){
-      toast.error(err.response.data)
+      toast.error(err.response.data);
+      setLoading(false);
     }
-    
     
   }
   return (
@@ -81,7 +90,9 @@ const Register = () => {
             </div>
 
             <div className = 'form-group p-2'>
-              <button  className = "btn btn-primary col">Create Account</button>
+              <button disabled = {!fname || !lname || !email || !secret || !pswd} className = "btn btn-primary col">
+                {loading ? <SyncOutlined spin className ="py-1" /> : "Create Account"}
+                </button>
             </div>
             
           </form>
