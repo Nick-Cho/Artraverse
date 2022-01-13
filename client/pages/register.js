@@ -18,7 +18,7 @@ const Register = () => {
     // console.log(fname, lname, email, pswd, secret)
     setLoading(true);
     try{
-      const {data} = await axios.post(`http://localhost:8000/api/register`, {
+      const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API}/register`, {
       fname,
       lname,
       email,
@@ -33,9 +33,9 @@ const Register = () => {
       setOk(data.ok);
       setLoading(false);
     } catch (err){
-      toast.error(err.response.data);
-      setLoading(false);
-    }
+       toast.error(err);
+       setLoading(false);
+     }
     
   }
   return (
