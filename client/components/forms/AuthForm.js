@@ -12,10 +12,13 @@ const AuthForm = ({
   setPswd,
   secret,
   setSecret,
-  loading
+  loading,
+  page
 }) => {
 return(
   <form onSubmit = {handleSubmit}>
+    
+    {page !== 'login' &&(
     <div className = 'form-group p-2'>
       <div className = 'row'>
         <div className = 'col-sm-6'>
@@ -26,6 +29,7 @@ return(
         </div>  
       </div>              
     </div>
+    )}
 
     <div className = 'form group p-2'>
       <input value = {email} type = "email" className = 'form-control' placeHolder="Email" onChange = {(e) => setEmail(e.target.value)}/>
@@ -41,6 +45,9 @@ return(
       </small>
     </div>
 
+    {page !== "login" &&
+     (
+     <>
     <div className = 'form group p-2'>
       <select className = "form-control">
         <option>What is your favourite color?</option>
@@ -56,6 +63,8 @@ return(
     <div className = 'form-group p-2'>
       <input value = {secret} type="text" placeHolder= 'Answer' className = "form-control" onChange= {(e) => setSecret(e.target.value)}/>
     </div>
+    </>
+    )}
 
     <div className = 'form-group p-2'>
       <button disabled = {!fname || !lname || !email || !secret || !pswd} className = "btn btn-primary col">

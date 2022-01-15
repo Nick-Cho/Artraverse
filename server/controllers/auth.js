@@ -13,8 +13,10 @@ export const register = (req,res)=>{
   if (!secret) return res.status(400).send("This field is required");
 
   //Checking if user with the email entered already exists
-  // const exist = User.findOne({"email": email});
-  // if (exist) return res.status(400).send("Email is already registered!");
+  const exist = User.findOne({"email": email});
+  // if (exist !== null){ 
+  // return res.status(400).send("Email is already registered!");
+  // }
 
   //hashing password
   const hashedPswd = hashPassword(pswd);
@@ -37,3 +39,7 @@ export const register = (req,res)=>{
     return res.status(400).send('Error in creating new user')
   }
 };
+
+export const login = async (req,res) => {
+
+}
