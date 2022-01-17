@@ -33,7 +33,8 @@ const Register = () => {
       setOk(data.ok);
       setLoading(false);
     } catch (err){
-       toast.error(err);
+       console.log(err.response.data.message);
+       toast.error(err.response.data.message);
        setLoading(false);
      }
     

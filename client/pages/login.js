@@ -21,8 +21,9 @@ const Login = () => {
       pswd,   
       });
       router.push("/");
+
     } catch (err){
-       toast.error(err);
+       toast.error(err.response.data.message);
        setLoading(false);
      }
     

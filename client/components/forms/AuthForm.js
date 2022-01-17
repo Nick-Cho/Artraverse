@@ -17,34 +17,34 @@ const AuthForm = ({
 }) => {
 return(
   <form onSubmit = {handleSubmit}>
-    
     {page !== 'login' &&(
     <div className = 'form-group p-2'>
       <div className = 'row'>
         <div className = 'col-sm-6'>
-        <input value = {fname} type = "text" className = 'form-control' placeHolder="First Name" onChange = {(e) => setFname(e.target.value)}/>
+        <input value = {fname} type = "text" className = 'form-control' placeholder="First Name" onChange = {(e) => setFname(e.target.value)}/>
         </div>
         <div className = 'col-sm-6'>
-        <input value = {lname} type = "text" className = 'form-control' placeHolder = "Last Name" onChange = {(e) => setLname(e.target.value)}/>
+        <input value = {lname} type = "text" className = 'form-control' placeholder = "Last Name" onChange = {(e) => setLname(e.target.value)}/>
         </div>  
       </div>              
     </div>
     )}
 
     <div className = 'form group p-2'>
-      <input value = {email} type = "email" className = 'form-control' placeHolder="Email" onChange = {(e) => setEmail(e.target.value)}/>
+      <input value = {email} type = "email" className = 'form-control' placeholder="Email" onChange = {(e) => setEmail(e.target.value)}/>
       <small className = 'form-text text-muted'>
         You can use letters, numbers and periods
       </small>
     </div>
 
     <div className = 'form group p-2'>
-      <input value = {pswd} type = "password" className = 'form-control' placeHolder="Password" onChange = {(e) => setPswd(e.target.value)}/>
+      <input value = {pswd} type = "password" className = 'form-control' placeholder="Password" onChange = {(e) => setPswd(e.target.value)}/>
       <small className = 'form-text text-muted'>
         Password must be at least 6 characters with. Use a mix of letters, numbers and symbols
       </small>
     </div>
 
+    {/* Only Rendered if the page is the register page */}
     {page !== "login" &&
      (
      <>
@@ -61,14 +61,18 @@ return(
     </div>
 
     <div className = 'form-group p-2'>
-      <input value = {secret} type="text" placeHolder= 'Answer' className = "form-control" onChange= {(e) => setSecret(e.target.value)}/>
+      <input value = {secret} type="text" placeholder= 'Answer' className = "form-control" onChange= {(e) => setSecret(e.target.value)}/>
     </div>
     </>
     )}
 
     <div className = 'form-group p-2'>
-      <button disabled = {!fname || !lname || !email || !secret || !pswd} className = "btn btn-primary col">
-        {loading ? <SyncOutlined spin className ="py-1" /> : "Create Account"}
+      {/* Only disable button when email and password aren't present on the login page */}
+      <button disabled = { page === "login" ?
+                          !email || !pswd:
+                          !fname || !lname || !email || !secret || !pswd} className = "btn btn-primary col">
+        {page !== "login" &&(loading ? <SyncOutlined spin className ="py-1" /> : "Create Account")}
+        {page === "login" && (loading ? <SyncOutlined spin className ="py-1" /> : "Login")}
         </button>
     </div>
   </form>
