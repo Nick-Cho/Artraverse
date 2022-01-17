@@ -19,8 +19,8 @@ export async function register (req,res) {
   if (exist) return res.status(400).send({message: "Email already registered!"});
   
   //hashing password
-  const hashedPswd = hashPassword(pswd);
-
+  const hashedPswd = await hashPassword(pswd);
+  //console.log("Hashed password is: ", hashedPswd);
   const user = new User({
     first_name: fname,
     last_name: lname,
