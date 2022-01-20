@@ -1,5 +1,5 @@
 import {UserProvider} from '../context/index.js'
-
+import "../public/css/styles.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 import Nav from '../components/Nav'
 
