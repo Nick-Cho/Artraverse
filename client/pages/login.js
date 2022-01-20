@@ -10,7 +10,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [pswd, setPswd] = useState(''); 
   const [loading, setLoading] = useState(false);
-
+  
   const [state, setState] = useContext(UserContext);
 
   const router = useRouter();
@@ -35,9 +35,14 @@ const Login = () => {
     } catch (err){
        toast.error(err.response.data.message);
        setLoading(false);
-     }
-    
+     } 
+  };
+
+  //Bringing user to home page if there is already a JWT token
+  if (state && state.token){
+    router.push("/");
   }
+
   return (
     <div className = 'container-fluid'>
       <div className ="row py-5 bg-secondary text-light">

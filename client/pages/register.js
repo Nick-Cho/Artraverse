@@ -1,10 +1,13 @@
-import {useState} from "react"
+import {useState, useContext} from "react";
+import {useRouter} from "next/router";
 import axios from 'axios';
 import { toast } from "react-toastify";
 import {Modal} from "antd";
 import Link from 'next/link';
 
 import AuthForm from '../components/forms/AuthForm.js'
+import { UserContext } from "../context/index.js";
+import { Router } from "next/router";
 const Register = () => {
   const [fname, setFname] = useState(''); 
   const [lname, setLname] = useState(''); 
@@ -13,6 +16,8 @@ const Register = () => {
   const [secret, setSecret] = useState('');  //This variable holds the answer to the password recovery question
   const [ok, setOk] = useState(false); //Variable is used to hold the value of whether a use was succesfully registered or not 
   const [loading, setLoading] = useState(false);
+  const [state, setState] = useContext(UserContext);
+  const router = useRouter();
   const handleSubmit = async (e) =>{
     e.preventDefault(); //prevents browser from reloading
     // console.log(fname, lname, email, pswd, secret)
@@ -38,6 +43,10 @@ const Register = () => {
        setLoading(false);
      }
     
+  }
+
+  if (state && state.token){
+    router.push("/")
   }
   return (
     <div className = 'container-fluid'>
