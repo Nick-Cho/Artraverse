@@ -2,6 +2,7 @@ import User from '../models/user'
 import {hashPassword, comparePassword} from "../helpers/auth"
 import jwt from "jsonwebtoken"
 
+
 export async function register (req,res) {
   //console.log('Register Endpoint =>', req.body)
   const {fname, lname, email, pswd, secret} = req.body;
@@ -71,6 +72,6 @@ export async function login (req,res) {
 }
 
 export async function currentUser(req,res) {
-  console.log(req.headers);
-  
+  console.log(req.user);
+
 }
