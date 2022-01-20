@@ -51,7 +51,7 @@ export async function login (req,res) {
 
     //check password
     const match = await comparePassword(pswd, user.password);
-    console.log(match);
+    //console.log(match);
     if (!match) return res.status(400).send({message: "Incorrect Password!"});
 
     //Create JWT token if user is authenticated

@@ -1,4 +1,8 @@
+import {UserContext} from '../context/index';
+import {useContext} from "react";
+
 const Home = () =>{
+  const [state,setState] = useContext(UserContext); //gives access to global state
   return(
     <div className = 'container'>
       <div className = "row">

@@ -1,14 +1,17 @@
-import {useState} from "react"
+import {useState, useContext} from "react";
 import axios from 'axios';
 import { toast } from "react-toastify";
 import {Modal} from "antd";
 import Link from 'next/link';
 import {useRouter} from "next/router";
-import AuthForm from '../components/forms/AuthForm.js'
+import AuthForm from '../components/forms/AuthForm.js';
+import {UserContext} from '../context/index';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [pswd, setPswd] = useState(''); 
   const [loading, setLoading] = useState(false);
+
+  const [state, setState] = useContext(UserContext);
 
   const router = useRouter();
   const handleSubmit = async (e) =>{
@@ -20,7 +23,14 @@ const Login = () => {
       email,
       pswd,   
       });
-      router.push("/");
+      //Updating global state
+      setState({
+        user: data.user,
+        token: data.token, 
+      });
+      //saving  token in local storage
+      window.localStorage.setItem('auth', JSON.stringify(data));
+      router.push("/"); //redirects user to home page
 
     } catch (err){
        toast.error(err.response.data.message);

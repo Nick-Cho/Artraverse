@@ -1,3 +1,5 @@
+import {UserProvider} from '../context/index.js'
+
 import "bootstrap/dist/css/bootstrap.min.css"
 import Nav from '../components/Nav'
 
@@ -6,12 +8,12 @@ import 'react-toastify/dist/ReactToastify.css'
 import 'antd/dist/antd.css'
 function MyApp({ Component, pageProps }) {
   return (
-    <>
+    <UserProvider>
 
       <Nav/>
       <ToastContainer/>
       <Component {...pageProps} />
-    </>
+    </UserProvider>
   )
 }
 

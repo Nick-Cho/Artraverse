@@ -1,27 +1,7 @@
 const bcrypt = require('bcrypt');
 
-
-//This function is responsible for hashing the password when we want to put it in the database
-// export const hashPassword = (password) => {
-//   return new Promise((resolve,reject) => {
-//     //used to hash the password, number of Salt increases more processing power (8-low, 12-mid, 16-high) 
-//     bcrypt.genSalt(12,(err,salt)=>{
-//       if (err){
-//         reject(err);
-//       }
-//       bcrypt.hash(password, salt, (err, hash) => {
-//         if (err){
-//           reject(err);
-//         }
-//         resolve(hash);
-//       })
-//     }) 
-//   })
-// }
-
-
 export function hashPassword (password) {
-  const saltRounds = 10;
+  const saltRounds = 10; //Controls how complicated the encryption is
   return new Promise((resolve,reject) => {  
     bcrypt.genSalt(saltRounds, function (err, salt) {
     if (err){
