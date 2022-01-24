@@ -18,8 +18,10 @@ function Nav () {
 
   const logout = () => {
     window.localStorage.removeItem("auth");
-    setState(null); //resetting user information
+    setState({user: {}, token: ""}); //resetting user information
+    console.log(state);
     router.push("/login");
+    
   }
 
   return (

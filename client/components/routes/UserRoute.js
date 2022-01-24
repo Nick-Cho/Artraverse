@@ -10,7 +10,8 @@ function UserRoute({children}) {
   const [state, setState] = useContext(UserContext);
 
   useEffect(()=>{
-    if (state.token !== null && state) {getCurrentUser()};
+    console.log(state);
+    if (state && state.token === "" ) {getCurrentUser()};
   },[state && state.token]);
 
   const getCurrentUser = async () =>{

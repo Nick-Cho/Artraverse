@@ -57,7 +57,7 @@ export async function login (req,res) {
 
     //Create JWT token if user is authenticated
     const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET, {
-      expiresIn: "7d",
+      expiresIn: "1200", //
     });
     user.password = undefined;
     user.secret = undefined;
