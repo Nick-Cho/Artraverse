@@ -72,6 +72,12 @@ export async function login (req,res) {
 }
 
 export async function currentUser(req,res) {
-  console.log(req.user);
+  try{
+    const user = await User.findById(req.user._id);
+    res.json({ok: true});
+  } catch (err){
+    console.log(err);
+    res.sendStatus(400);
+  }
 
 }
