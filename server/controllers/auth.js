@@ -57,7 +57,7 @@ export async function login (req,res) {
 
     //Create JWT token if user is authenticated
     const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET, {
-      expiresIn: "1200", //
+      expiresIn: "7d", 
     });
     user.password = undefined;
     user.secret = undefined;
@@ -80,4 +80,38 @@ export async function currentUser(req,res) {
     res.sendStatus(400);
   }
 
+}
+
+export const forgotPassword = async (req,res) =>{
+  const {email, newPswd, secret} = req.body;
+  //validation
+  if (!newPswd || newPswd < 6){
+    return res.json({
+      error: 'New password is required and should be at least 6 characters long'
+    })
+  }
+  if (!secret){
+    return res.json({
+      error: "Secret is required",
+    })
+  }
+  const user = await User.findOne({email, secret});
+  if (!user) {
+    return res.json({
+      error: "Your credentials do not match an account"
+    });
+  }
+
+  try{
+    const hashed = await hashPassword(newPswd)
+    await User.findByIdAndUpdate(user._id, {password: hashed});
+    return res.json({
+      success: "Password updated",
+    })
+  } catch (err){
+    console.log(err);
+    return res.json({
+      error: "Something went wrong, Try again"
+    })
+  }
 }

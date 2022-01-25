@@ -73,7 +73,7 @@ return(
                           !fname || !lname || !email || !secret || !pswd} className = "btn btn-primary col">
         {page !== "login" &&(loading ? <SyncOutlined spin className ="py-1" /> : "Create Account")}
         {page === "login" && (loading ? <SyncOutlined spin className ="py-1" /> : "Login")}
-        </button>
+      </button>
     </div>
   </form>
 )}

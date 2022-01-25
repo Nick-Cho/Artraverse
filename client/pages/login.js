@@ -19,10 +19,12 @@ const Login = () => {
     // console.log(fname, lname, email, pswd, secret)
     setLoading(true);
     try{
+      
       const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API}/login`, {
       email,
       pswd,   
       });
+      console.log(data);
       //Updating global state
       setState({
         user: data.user,
@@ -33,7 +35,8 @@ const Login = () => {
       router.push("/"); //redirects user to home page
 
     } catch (err){
-       toast.error(err.response.data.message);
+      console.log(err);
+       toast.error(err.response);
        setLoading(false);
      } 
   };
@@ -75,6 +78,15 @@ const Login = () => {
         </div>
       </div>
 
+      <div className = "row">
+        <div className = "col">
+          <p className = "text-center">
+            <Link href = "/forgot-password">
+              <a className = "text-danger">Forgot Password</a>
+            </Link>
+          </p>
+        </div>
+      </div>
     </div>
   )
 }

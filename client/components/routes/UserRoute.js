@@ -11,33 +11,33 @@ function UserRoute({children}) {
 
   useEffect(()=>{
     console.log(state);
-    if (state && state.token === "" ) {getCurrentUser()};
+    if (state && state.token !== "" ) {
+      getCurrentUser()
+    };
   },[state && state.token]);
 
   const getCurrentUser = async () =>{
     try{
-      const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API}/current-user`, {
-        headers: {
-          "Authorization": `Bearer ${state.token}`,
-        }
-      });
+      const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API}/current-user`);
       if (data.ok) setOk(true);
     }
     catch(err){
       router.push('/login') //making user log in if the current user doesn't match token
     } 
   }
-
+  
   //Handles the case where the user tries to access the page with nothing in the state
-  process.browser && state === null && setTimeout(()=>{
+  process.browser && state === {token: ""} && setTimeout(()=>{
     getCurrentUser();
   }, 1000)
 
   return !ok ? 
-  (<SyncOutlined 
+  (<div style ={{overflow: 'hidden'}}>
+  <SyncOutlined 
     spin 
-    className = "d-flex justify-content center display-1 text-primary"
-    />) : 
+    className = "d-flex justify-content-center display-1 text-primary"
+    />
+    </div>) : 
    (<>{children}</>) 
 }
 
