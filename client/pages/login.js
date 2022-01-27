@@ -18,27 +18,25 @@ const Login = () => {
     e.preventDefault(); //prevents browser from reloading
     // console.log(fname, lname, email, pswd, secret)
     setLoading(true);
-    try{
-      
-      const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API}/login`, {
-      email,
-      pswd,   
-      });
-      console.log(data);
-      //Updating global state
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/login`, {
+    email,
+    pswd,   
+    });
+    //console.log("Data received in login.js", response);
+    //Updating global state
+    if (response.status == 200){
       setState({
-        user: data.user,
-        token: data.token, 
+      user: response.data.user,
+      token: response.data.token, 
       });
       //saving  token in local storage
-      window.localStorage.setItem('auth', JSON.stringify(data));
+      window.localStorage.setItem('auth', JSON.stringify(response.data));
       router.push("/"); //redirects user to home page
-
-    } catch (err){
-      console.log(err);
-       toast.error(err.response);
-       setLoading(false);
-     } 
+    }
+    else if (response.status == 400){
+      toast.error(response.data.message);
+      setLoading(false);
+    }
   };
 
   //Bringing user to home page if there is already a JWT token

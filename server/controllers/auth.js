@@ -59,6 +59,7 @@ export async function login (req,res) {
     const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET, {
       expiresIn: "7d", 
     });
+
     user.password = undefined;
     user.secret = undefined;
     res.json({
@@ -74,7 +75,10 @@ export async function login (req,res) {
 export async function currentUser(req,res) {
   try{
     const user = await User.findById(req.user._id);
-    res.json({ok: true});
+    if (user){
+      res.json({ok: true});
+    }
+    
   } catch (err){
     console.log(err);
     res.sendStatus(400);

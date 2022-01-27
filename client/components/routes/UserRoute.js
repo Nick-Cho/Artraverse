@@ -11,14 +11,20 @@ function UserRoute({children}) {
 
   useEffect(()=>{
     console.log(state);
-    if (state && state.token !== "" ) {
+    if (state) {
       getCurrentUser()
     };
   },[state && state.token]);
 
   const getCurrentUser = async () =>{
     try{
-      const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API}/current-user`);
+      const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API}/current-user`,
+      {
+        headers:{
+          Authorization: `Bearer ${state.token}`,
+        },
+      });
+      console.log(data);
       if (data.ok) setOk(true);
     }
     catch(err){
@@ -29,7 +35,7 @@ function UserRoute({children}) {
   //Handles the case where the user tries to access the page with nothing in the state
   process.browser && state === {token: ""} && setTimeout(()=>{
     getCurrentUser();
-  }, 1000)
+  }, 1200)
 
   return !ok ? 
   (<div style ={{overflow: 'hidden'}}>
