@@ -19,25 +19,33 @@ const ForgotPassword = () => {
   const handleSubmit = async (e) =>{
     e.preventDefault(); //prevents browser from reloading
     // console.log(fname, lname, email, pswd, secret)
-    try{
-      setLoading(true);
-      const {data} = await axios.post(`/forgot-password`, {
-      email,
-      newPswd,
-      secret,
-      });
-      console.log("forgot password data: ", data)
-      // setEmail("");
-      // setPswd("");
-      // setSecret("");
-      // setOk(data.ok);
-      // setLoading(false);
-    } catch (err){
-       console.log(err.response.data.message);
-       toast.error(err.response.data.message);
-       setLoading(false);
-     }
     
+    setLoading(true);
+    const response = await axios.post(`/forgot-password`, {
+    email,
+    newPswd,
+    secret,
+    })
+    //console.log("forgot password data: ", response);
+    if (response.status === 400){
+      toast.error(response.data.message);
+      setLoading(false);
+    }
+    else if (response.status === 200){
+      setEmail("");
+      setNewPswd("");
+      setSecret("");
+      setOk(true);
+      setLoading(false);
+    }
+    
+
+    // setEmail("");
+    // setPswd("");
+    // setSecret("");
+    // setOk(data.ok);
+    // setLoading(false);
+  
   }
 
   if (state && state.token){

@@ -23,7 +23,8 @@ function UserRoute({children}) {
         headers:{
           Authorization: `Bearer ${state.token}`,
         },
-      });
+      }
+      );
       console.log(data);
       if (data.ok) setOk(true);
     }

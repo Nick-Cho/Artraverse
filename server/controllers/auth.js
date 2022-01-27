@@ -32,7 +32,7 @@ export async function register (req,res) {
   try{
     user.save();
     //console.log('Registered User:', user);
-    return res.json({
+    return res.status(200).json({
       ok: true,
     })
   } catch (err) {
@@ -89,33 +89,34 @@ export async function currentUser(req,res) {
 export const forgotPassword = async (req,res) =>{
   const {email, newPswd, secret} = req.body;
   //validation
-  if (!newPswd || newPswd < 6){
-    return res.json({
-      error: 'New password is required and should be at least 6 characters long'
+  
+  if (!newPswd || newPswd.length < 6){
+    return res.status(400).json({
+      message: 'New password is required and should be at least 6 characters long'
     })
   }
   if (!secret){
-    return res.json({
-      error: "Secret is required",
+    return res.status(400).json({
+      message: "Secret is required",
     })
   }
   const user = await User.findOne({email, secret});
   if (!user) {
-    return res.json({
-      error: "Your credentials do not match an account"
+    return res.status(400).json({
+      message: "Your credentials do not match an account"
     });
   }
 
   try{
     const hashed = await hashPassword(newPswd)
     await User.findByIdAndUpdate(user._id, {password: hashed});
-    return res.json({
-      success: "Password updated",
+    return res.status(200).json({
+      message: "Password updated",
     })
   } catch (err){
     console.log(err);
-    return res.json({
-      error: "Something went wrong, Try again"
+    return res.status(400).json({
+      message: "Something went wrong, Try again"
     })
   }
 }

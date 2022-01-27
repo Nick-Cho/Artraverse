@@ -22,27 +22,30 @@ const Register = () => {
     e.preventDefault(); //prevents browser from reloading
     // console.log(fname, lname, email, pswd, secret)
     setLoading(true);
-    try{
-      const {data} = await axios.post(`/register`, {
-      fname,
-      lname,
-      email,
-      pswd,
-      secret,
-      });
+   
+    const response = await axios.post(`/register`, {
+    fname,
+    lname,
+    email,
+    pswd,
+    secret,
+    });
+    let res = response.response;
+    console.log("register page api call data:",response);
+    if (response.status == 200){
       setFname("");
       setLname("")
       setEmail("");
       setPswd("");
       setSecret("");
-      setOk(data.ok);
+      setOk(response.data.ok);
       setLoading(false);
-    } catch (err){
-       console.log(err.response.data.message);
-       toast.error(err.response.data.message);
-       setLoading(false);
-     }
-    
+
+    }
+    else{
+      toast.error(res.data.message);
+      setLoading(false);
+    }
   }
 
   if (state && state.token){

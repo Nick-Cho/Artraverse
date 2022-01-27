@@ -19,7 +19,7 @@ const UserProvider = ({children}) => {
   
   const token = ((state && state.token) ? state.token : "");
   axios.defaults.baseURL = process.env.NEXT_PUBLIC_API;
-  axios.defaults.headers.common["Authorization"] = `Bearer: ${token}`
+  axios.defaults.headers.common["Authorization"] = `Bearer: [${token}]`;
   
   // Forcing user to log in if login token has expired
   axios.interceptors.response.use(
@@ -30,16 +30,15 @@ const UserProvider = ({children}) => {
     // Do something with request error
     let res = error.response;
     console.log("axios interceptor error", error);
-    console.log(res.status);
     if (res.status === 401){
       setState({user: {}, token: ""});
       window.localStorage.removeItem("auth");
       router.push("/login");
     }
-    else if (res.status === 400){
-      //console.log(res);
-      return error;
+    else{
+      return error.response;
     }
+
   });
 
   return(
