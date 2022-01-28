@@ -23,6 +23,15 @@ const Home = () => {
       setContent("");
     }
   }
+
+  const handleImage = async (e) =>{
+    const file = e.target.files[0]; //could my multiple files so index to grab the first image
+    let formData = new FormData();
+    formData.append('image', file); //Adding image data
+    formData.append("content", content); //Adding caption data 
+    console.log([...formData]);
+
+  }
   return(
     <UserRoute>
       <div className = "container-fluid">
@@ -35,7 +44,11 @@ const Home = () => {
       
       <div className = "row py-3">
         <div className = "col-md-8">
-          <CreatePost content = {content} setContent = {setContent} postSubmit = {postSubmit}/>
+          <CreatePost 
+          content = {content} 
+          setContent = {setContent} 
+          postSubmit = {postSubmit} 
+          handleImage = {handleImage}/>
         </div>
         <div className = "col-md-4">
           <h2>SideBar</h2>
