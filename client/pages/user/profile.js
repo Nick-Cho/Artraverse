@@ -29,8 +29,8 @@ const Home = () => {
     let formData = new FormData();
     formData.append('image', file); //Adding image data
     formData.append("content", content); //Adding caption data 
-    console.log([...formData]);
-
+    // console.log([...formData]);
+    const response = await axios.post("upload-image", formData);
   }
   return(
     <UserRoute>

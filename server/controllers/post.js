@@ -17,3 +17,7 @@ export async function createPost(req,res) {
     res.sendStatus(400);
   }
 }
+
+export async function uploadImage(){
+  
+}
