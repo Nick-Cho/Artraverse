@@ -19,8 +19,7 @@ const UserProvider = ({children}) => {
   
   const token = ((state && state.token) ? state.token : "");
   axios.defaults.baseURL = process.env.NEXT_PUBLIC_API;
-  axios.defaults.headers.common["Authorization"] = `Bearer: [${token}]`;
-  
+  axios.defaults.headers.common["Authorization"] =  `Bearer ${token}`;
   // Forcing user to log in if login token has expired
   axios.interceptors.response.use(
     function (response) {
@@ -29,7 +28,7 @@ const UserProvider = ({children}) => {
   function (error) {
     // Do something with request error
     let res = error.response;
-    console.log("axios interceptor error", error);
+    //console.log("axios interceptor error", error);
     if (res.status === 401){
       setState({user: {}, token: ""});
       window.localStorage.removeItem("auth");

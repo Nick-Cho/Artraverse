@@ -25,7 +25,7 @@ function UserRoute({children}) {
         },
       }
       );
-      console.log(data);
+      //console.log(data);
       if (data.ok) setOk(true);
     }
     catch(err){
