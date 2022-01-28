@@ -37,7 +37,9 @@ const Home = () => {
         <div className = "col-md-8">
           <CreatePost content = {content} setContent = {setContent} postSubmit = {postSubmit}/>
         </div>
-        <div className = "col-md-4"></div>
+        <div className = "col-md-4">
+          <h2>SideBar</h2>
+        </div>
       </div>
     </UserRoute>
   );
