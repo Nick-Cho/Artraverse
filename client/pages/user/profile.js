@@ -30,7 +30,8 @@ const Home = () => {
     formData.append('image', file); //Adding image data
     formData.append("content", content); //Adding caption data 
     // console.log([...formData]);
-    const response = await axios.post("upload-image", formData);
+    const response = await axios.post('/upload-image', formData);
+    console.log("uploaded image data:", response);
   }
   return(
     <UserRoute>
