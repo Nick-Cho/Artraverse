@@ -10,10 +10,12 @@ const Home = () => {
 
   const [state, setState] = useContext(UserContext);
   const [content, setContent] = useState(""); //Content of the post
-  
+  const [image, setImage] = useState({});
+  const [loading, setLoading] = useState(false); //Boolean for if image is uploading or not
+
   const postSubmit = async (e) => {
     e.preventDefault(); //prevents client from refreshing
-    const response = await axios.post('/create-post', {content});
+    const response = await axios.post('/create-post', {content, image});
     console.log("create post response: ", response);
     if (response.status === 400) {
       toast.error(response.data.message);
@@ -21,6 +23,7 @@ const Home = () => {
     else{
       toast.success('Post created')
       setContent("");
+      setImage({});
     }
   }
 
@@ -30,8 +33,14 @@ const Home = () => {
     formData.append('image', file); //Adding image data
     formData.append("content", content); //Adding caption data 
     // console.log([...formData]);
+    setLoading(true);
     const response = await axios.post('/upload-image', formData);
-    console.log("uploaded image data:", response);
+    setImage({
+      url: response.data.url,
+      public_id: response.data.public_id
+    });
+    setLoading(false);
+    //console.log("uploaded image data:", response);
   }
   return(
     <UserRoute>
@@ -49,7 +58,9 @@ const Home = () => {
           content = {content} 
           setContent = {setContent} 
           postSubmit = {postSubmit} 
-          handleImage = {handleImage}/>
+          handleImage = {handleImage}
+          loading = {loading}
+          image={image}/>
         </div>
         <div className = "col-md-4">
           <h2>SideBar</h2>

@@ -8,14 +8,14 @@ cloudinary.config({
 })
 export async function createPost(req,res) {
   // console.log('post received in controller: ', req.body)
-  const {content} = req.body;
-  if(!content.length){
+  const {content, image} = req.body;
+  if(!content.length && !image){
     return res.status(400).send({
       message: "Content is required"
     });
   }
   try{
-    const post = new Post({content, postedBy: req.user._id});
+    const post = new Post({content, image, postedBy: req.user._id});
     post.save();
     res.json(post);
   } catch(err) {
@@ -28,7 +28,7 @@ export async function uploadImage(req,res){
   //console.log("request files:", req.files);
   try{
     const result = await cloudinary.uploader.upload(req.files.image.path);
-    console.log("uploaded image url:", result);
+    //console.log("uploaded image url:", result);
     res.json({
       url: result.secure_url,
       public_id: result.public_id,
