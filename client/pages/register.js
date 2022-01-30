@@ -40,10 +40,9 @@ const Register = () => {
       setSecret("");
       setOk(response.data.ok);
       setLoading(false);
-
     }
     else{
-      toast.error(res.data.message);
+      toast.error(response.data.message);
       setLoading(false);
     }
   }

@@ -1,4 +1,5 @@
 import Post from '../models/post';
+import User from '../models/user'
 import cloudinary from "cloudinary";
 
 cloudinary.config({
@@ -9,13 +10,14 @@ cloudinary.config({
 export async function createPost(req,res) {
   // console.log('post received in controller: ', req.body)
   const {content, image} = req.body;
-  if(!content.length && !image){
+  if(Object.keys(image).length===0){
     return res.status(400).send({
-      message: "Content is required"
+      message: "Image is required"
     });
   }
   try{
-    const post = new Post({content, image, postedBy: req.user._id});
+    const post = new Post({content, image, postedBy: {_id: req.user._id}});
+    //console.log(post.postedBy);
     post.save();
     res.json(post);
   } catch(err) {
@@ -33,6 +35,19 @@ export async function uploadImage(req,res){
       url: result.secure_url,
       public_id: result.public_id,
     })
+  } catch(err){
+    console.log(err);
+  }
+};
+
+export const postsByUser = async (req,res) => {
+  try{
+    const posts = await Post.find({postedBy: req.user._id})
+    .populate('postedBy')
+    .sort({createdAt: -1}) // filters by newest post
+    .limit(9); //limits to 9 posts
+    console.log("posts after populated: ", posts);
+    res.json(posts);
   } catch(err){
     console.log(err);
   }

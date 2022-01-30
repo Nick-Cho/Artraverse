@@ -10,7 +10,7 @@ function UserRoute({children}) {
   const [state, setState] = useContext(UserContext);
 
   useEffect(()=>{
-    console.log(state);
+    //console.log(state);
     if (state) {
       getCurrentUser()
     };

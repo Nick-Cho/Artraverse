@@ -1,18 +1,23 @@
-import {useContext, useState} from "react";
+import {useContext, useState, useEffect} from "react";
 import {UserContext} from "../../context/index.js";
 import UserRoute from "../../components/routes/UserRoute";
 import CreatePost from "../../components/forms/CreatePostForm";
 import {useRouter} from "next/router";
 import axios from 'axios';
 import { toast } from "react-toastify";
+import PostList from '../../components/cards/PostList'
 const Home = () => {
   const router = useRouter();
+
+  useEffect(()=>{
+    fetchUserPosts();
+  }, [])
 
   const [state, setState] = useContext(UserContext);
   const [content, setContent] = useState(""); //Content of the post
   const [image, setImage] = useState({});
   const [loading, setLoading] = useState(false); //Boolean for if image is uploading or not
-
+  const [posts, setPosts] = useState([]);
   const postSubmit = async (e) => {
     e.preventDefault(); //prevents client from refreshing
     const response = await axios.post('/create-post', {content, image});
@@ -42,6 +47,19 @@ const Home = () => {
     setLoading(false);
     //console.log("uploaded image data:", response);
   }
+
+  const fetchUserPosts = async () => {
+    try{
+      const response = await axios.get('/user-posts');
+      //console.log(response.data);
+      setPosts(response.data);
+      console.log("posts being sent to postslist component:", posts);
+      //console.log(state);
+    } catch (err){
+      console.log(err)
+    }
+  }
+
   return(
     <UserRoute>
       <div className = "container-fluid">
@@ -61,11 +79,19 @@ const Home = () => {
           handleImage = {handleImage}
           loading = {loading}
           image={image}/>
+          <br/>
+          <PostList posts = {posts}/>
         </div>
-        <div className = "col-md-4">
-          <h2>SideBar</h2>
-        </div>
+      
+        
+      {/* <pre>{JSON.stringify(posts, null, 4)}</pre> */}
+
+      
+
+      <div className = "col-md-4">
+        <h2>SideBar</h2>
       </div>
+      </div>  
     </UserRoute>
   );
 };  

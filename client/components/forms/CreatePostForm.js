@@ -20,7 +20,7 @@ function CreatePostForm({content, setContent, postSubmit, handleImage, loading, 
     </div>
    
     <div className = "card-footer d-flex justify-content-between text-muted">
-      <button disabled = {image == {}} onClick = {postSubmit} className = "btn btn-primary btn-sm mt-1">Post</button>
+      <button onClick = {postSubmit} className = "btn btn-primary btn-sm mt-1">Post</button>
       
       <label>
         {image && image.url ? (
