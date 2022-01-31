@@ -42,7 +42,8 @@ export async function uploadImage(req,res){
 
 export const postsByUser = async (req,res) => {
   try{
-    const posts = await Post.find({postedBy: req.user._id})
+    // const posts = await Post.find({postedBy: req.user._id})
+    const posts = await Post.find()
     .populate('postedBy')
     .sort({createdAt: -1}) // filters by newest post
     .limit(9); //limits to 9 posts

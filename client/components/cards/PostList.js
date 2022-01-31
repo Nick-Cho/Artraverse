@@ -2,6 +2,7 @@ import renderHTML from 'react-render-html';
 import moment from 'moment';
 import {Avatar} from 'antd';
 import PostImage from '../images/PostImage'
+import {HeartOutlined, HeartFilled, CommentOutlined} from "@ant-design/icons"
 function PostList({posts}) {
   return(
     <> {posts && posts.map((post) => (
@@ -18,7 +19,14 @@ function PostList({posts}) {
         </div>
         <div className = "card-footer">
           <PostImage url = {post.image.url}/>
-          <div className = "pt-3"></div>
+          <div className = "d-flex pt-2">
+            <HeartOutlined style={{cursor: "pointer"}} className = "text-danger pt-2 h5 px-2"/>
+            <div className = "pt-2 pl-4" style ={{marginRight: "2rem"}}>likes</div>
+            <CommentOutlined style={{cursor: "pointer"}} className = "text-danger pt-2 h5 px-2"/>
+            <div className = "pt-2 pl-4" style ={{marginRight: "2rem"}}>comments</div>
+          </div>
+          
+          
         </div>  
       </div>
       ))
