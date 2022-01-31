@@ -53,3 +53,12 @@ export const postsByUser = async (req,res) => {
     console.log(err);
   }
 }
+
+export const userPost = async (req,res) => {
+  try{
+    const post = await Post.findById(req.params._id);
+    res.json(post);
+  } catch (error) {
+    console.log(err);
+  }
+}
