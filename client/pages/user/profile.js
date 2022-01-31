@@ -1,7 +1,7 @@
 import {useContext, useState, useEffect} from "react";
 import {UserContext} from "../../context/index.js";
 import UserRoute from "../../components/routes/UserRoute";
-import CreatePost from "../../components/forms/CreatePostForm";
+import CreatePost from "../../components/forms/PostForm";
 import {useRouter} from "next/router";
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -14,9 +14,11 @@ const Home = () => {
   }, [])
 
   const [state, setState] = useContext(UserContext);
+  //state
   const [content, setContent] = useState(""); //Content of the post
   const [image, setImage] = useState({});
   const [loading, setLoading] = useState(false); //Boolean for if image is uploading or not
+  //posts
   const [posts, setPosts] = useState([]);
   const postSubmit = async (e) => {
     e.preventDefault(); //prevents client from refreshing
@@ -83,11 +85,6 @@ const Home = () => {
           <br/>
           <PostList posts = {posts}/>
         </div>
-      
-        
-      {/* <pre>{JSON.stringify(posts, null, 4)}</pre> */}
-
-      
 
       <div className = "col-md-4">
         <h2>SideBar</h2>

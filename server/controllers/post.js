@@ -19,7 +19,7 @@ export async function createPost(req,res) {
     const post = new Post({content, image, postedBy: {_id: req.user._id}});
     //console.log(post.postedBy);
     post.save();
-    res.json(post);
+    res.status(200).json(post);
   } catch(err) {
     console.log(err);
     res.sendStatus(400);
@@ -57,7 +57,7 @@ export const postsByUser = async (req,res) => {
 export const userPost = async (req,res) => {
   try{
     const post = await Post.findById(req.params._id);
-    res.json(post);
+    res.status(200).json(post);
   } catch (error) {
     console.log(err);
   }
