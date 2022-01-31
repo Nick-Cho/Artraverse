@@ -8,9 +8,9 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET,
 })
 export async function createPost(req,res) {
-  // console.log('post received in controller: ', req.body)
+  
   const {content, image} = req.body;
-  if(Object.keys(image).length===0){
+  if(Object.keys(image).length === 0){
     return res.status(400).send({
       message: "Image is required"
     });
@@ -46,7 +46,7 @@ export const postsByUser = async (req,res) => {
     .populate('postedBy')
     .sort({createdAt: -1}) // filters by newest post
     .limit(9); //limits to 9 posts
-    console.log("posts after populated: ", posts);
+    //console.log("posts after populated: ", posts);
     res.json(posts);
   } catch(err){
     console.log(err);

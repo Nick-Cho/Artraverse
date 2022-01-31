@@ -51,10 +51,10 @@ const Home = () => {
   const fetchUserPosts = async () => {
     try{
       const response = await axios.get('/user-posts');
-      //console.log(response.data);
       setPosts(response.data);
-      console.log("posts being sent to postslist component:", posts);
-      //console.log(state);
+      // console.log("response data: ", response.data);
+      // console.log("posts being sent to postslist component:", posts);
+      
     } catch (err){
       console.log(err)
     }
