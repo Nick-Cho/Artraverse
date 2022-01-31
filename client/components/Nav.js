@@ -36,7 +36,7 @@ function Nav () {
         <>
           <div className="dropdown">
             <button className="btn dropdown-toggle text-light" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              {state && state.user && state.user.name}
+              {state.user.first_name}
             </button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <li>
