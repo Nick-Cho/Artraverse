@@ -6,7 +6,7 @@ const router = express.Router();
 //middleware
 import {requireSignIn, canEditPost} from "../middlewares";
 //Controllers 
-import {createPost, uploadImage, postsByUser, userPost, updatePost} from '../controllers/post.js'
+import {createPost, uploadImage, postsByUser, userPost, updatePost, deletePost} from '../controllers/post.js'
 
 router.post('/create-post',requireSignIn, createPost);
 router.post('/upload-image',requireSignIn, formidable({maxFileSize: 5*1024*1024}), uploadImage);
@@ -14,4 +14,6 @@ router.post('/upload-image',requireSignIn, formidable({maxFileSize: 5*1024*1024}
 router.get('/user-posts', requireSignIn, postsByUser);
 router.get('/user-post/:_id', requireSignIn, userPost)
 router.put('/update-post/:_id', requireSignIn, canEditPost, updatePost)
+router.delete('/delete-post/:_id', requireSignIn, canEditPost, deletePost)
+
 module.exports = router;

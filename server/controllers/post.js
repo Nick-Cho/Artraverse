@@ -75,3 +75,13 @@ export const updatePost = async (req,res) =>{
   }
 }
 
+export const deletePost = async (req,res) =>{
+  try{
+    const post = await Post.findByIdAndDelete(req.params._id,);
+    //removing image from cloudinary database
+    const image = await cloudinary.uploader.destroy(post.image.public_id);
+    res.status(200).send({ok: true});
+  }catch (err){
+    console.log(err);
+  }
+}
