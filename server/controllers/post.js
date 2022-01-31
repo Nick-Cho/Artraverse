@@ -57,8 +57,21 @@ export const postsByUser = async (req,res) => {
 export const userPost = async (req,res) => {
   try{
     const post = await Post.findById(req.params._id);
-    res.status(200).json(post);
+    res.status(200).send(post);
   } catch (error) {
     console.log(err);
   }
 }
+
+export const updatePost = async (req,res) =>{
+  // console.log("post update controller", req.body);
+  try{
+    const post = await Post.findByIdAndUpdate(req.params._id, req.body, {
+      new: true, //returns updated response
+    })
+    res.status(200).send(post);
+  }catch(err){
+    console.log(err);
+  }
+}
+

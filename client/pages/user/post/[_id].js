@@ -22,6 +22,7 @@ function EditPost() {
   //console.log("router: ", router);
   const fetchPost = async () =>{
     const response = await axios.get(`/user-post/${_id}`);
+    console.log(response);
     if (response.status == 200){
       setPost(response.data);
       setContent(response.data.content);
@@ -31,8 +32,9 @@ function EditPost() {
 
   const postSubmit = async (e) => {
     e.preventDefault();
-    console.log("submit updated post");
-    const response = axios.put(`/update-post/${_id}`, {content,image});
+    
+    const response = await axios.put(`/update-post/${_id}`, {content,image});
+    console.log("response from update-post: ", response);
     if (response.status == 400){
       toast.error(response.data.message);
     }
