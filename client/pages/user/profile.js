@@ -26,7 +26,8 @@ const Home = () => {
       toast.error(response.data.message);
     }
     else{
-      toast.success('Post created')
+      fetchUserPosts();
+      toast.success('Post created');
       setContent("");
       setImage({});
     }

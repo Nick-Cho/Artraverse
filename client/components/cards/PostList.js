@@ -1,9 +1,14 @@
 import renderHTML from 'react-render-html';
+import {UserContext} from "../../context/index.js";
+import {useContext} from "react";
+import {useRouter} from "next/router";
 import moment from 'moment';
 import {Avatar} from 'antd';
 import PostImage from '../images/PostImage'
-import {HeartOutlined, HeartFilled, CommentOutlined} from "@ant-design/icons"
+import {HeartOutlined, HeartFilled, CommentOutlined, EditOutlined, DeleteOutlined} from "@ant-design/icons"
 function PostList({posts}) {
+  const [state, setState] = useContext(UserContext);
+  const router = useRouter();
   return(
     <> {posts && posts.map((post) => (
         <div key = {post._id} className = "card mb-5">
@@ -24,6 +29,16 @@ function PostList({posts}) {
             <div className = "pt-2 pl-4" style ={{marginRight: "2rem"}}>likes</div>
             <CommentOutlined style={{cursor: "pointer"}} className = "text-danger pt-2 h5 px-2"/>
             <div className = "pt-2 pl-4" style ={{marginRight: "2rem"}}>comments</div>
+
+            {state && state.user && state.user._id === post.postedBy._id && (
+              <>
+                <EditOutlined 
+                style={{cursor: "pointer"}}
+                onClick={()=> router.push(`/user/post/${post._id}`)}
+                className = "text-danger pt-2 h5 px-2 mx-auto"/>
+                <DeleteOutlined className = "text-danger pt-2 h5 px-2" style={{cursor: "pointer"}}/>
+              </>
+            )}
           </div>
           
           
