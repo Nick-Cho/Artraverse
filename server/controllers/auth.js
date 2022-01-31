@@ -1,7 +1,7 @@
 import User from '../models/user'
 import {hashPassword, comparePassword} from "../helpers/auth"
 import jwt from "jsonwebtoken"
-
+import {nanoid} from "nanoid"
 
 export async function register (req,res) {
   //console.log('Register Endpoint =>', req.body)
@@ -28,6 +28,7 @@ export async function register (req,res) {
     email: email,
     password: hashedPswd,
     secret: secret,
+    username: nanoid(10),
   });
   try{
     user.save();

@@ -32,7 +32,7 @@ function Nav () {
      
       
 
-      {(state.token != "") ? (
+      {(state) ? (
         <>
           <div className="dropdown">
             <button className="btn dropdown-toggle text-light" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

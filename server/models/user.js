@@ -13,6 +13,11 @@ const userSchema = new Schema({
     trim: true, //Gets rid of whitespace in the beginning or end of the string
     required: true,
   },
+  username: {
+    type: String,
+    unique: true,
+    required: true,
+  },
   email: {
     type: String,
     trim: true, //Gets rid of whitespace in the beginning or end of the string
