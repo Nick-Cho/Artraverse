@@ -1,12 +1,8 @@
 import renderHTML from 'react-render-html';
 import moment from 'moment';
 import {Avatar} from 'antd';
-import { useEffect } from 'react';
+import PostImage from '../images/PostImage'
 function PostList({posts}) {
-
-  // useEffect(()=>{
-  //   console.log(posts)
-  // }, [posts])
   return(
     <> {posts && posts.map((post) => (
         <div key = {post._id} className = "card mb-5">
@@ -21,7 +17,7 @@ function PostList({posts}) {
           {renderHTML(post.content)}
         </div>
         <div className = "card-footer">
-          <img src = {post.image.url} alt={post.postedBy.first_name}/>
+          <PostImage url = {post.image.url}/>
           <div className = "pt-3"></div>
         </div>  
       </div>
