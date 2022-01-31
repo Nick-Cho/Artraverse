@@ -63,6 +63,20 @@ const Home = () => {
     }
   }
 
+  const handleDelete = async (post) =>{
+    try{
+      const answer = window.confirm("Are you sure you want to delete this post?");
+      if (!answer) return;
+      const response = await axios.delete(`/delete-post/${post._id}`);
+      if (response.status == 200){
+        toast.error('Post Deleted!');
+      }
+      fetchUserPosts();
+    } 
+    catch(err){
+      console.log(err);
+    }
+  }
   return(
     <UserRoute>
       <div className = "container-fluid">
@@ -83,7 +97,7 @@ const Home = () => {
           loading = {loading}
           image={image}/>
           <br/>
-          <PostList posts = {posts}/>
+          <PostList posts = {posts} handleDelete={handleDelete}/>
         </div>
 
       <div className = "col-md-4">
