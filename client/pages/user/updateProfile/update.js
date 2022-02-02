@@ -50,6 +50,11 @@ const ProfileUpdate = () => {
     });
     console.log("register page api call data:",response);
     if (response.status == 200){
+      let auth = JSON.parse(localStorage.getItem("auth"));
+      auth.user = response.data;
+      localStorage.setItem("auth", JSON.stringify(auth));
+      //updating context
+      setState({...state, user: response.data});
       setOk(true);
       setLoading(false);
     }

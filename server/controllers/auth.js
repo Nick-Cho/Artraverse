@@ -139,7 +139,7 @@ export const profileUpdate = async (req,res) => {
     if (req.body.pswd){
       if (req.body.pswd.length < 6){
         return res.status(400).send({
-          error: "Password needs to be at least 6 characters long"
+          message: "Password needs to be at least 6 characters long"
         });
       }
       else{
@@ -157,7 +157,7 @@ export const profileUpdate = async (req,res) => {
   } catch (err) {
     console.log(err);
     if (err.code == 11000){
-      return res.status(400).send({error: "Username taken"})
+      return res.status(400).send({message: "Username taken"})
     }
   }
 }
