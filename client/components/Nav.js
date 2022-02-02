@@ -13,13 +13,13 @@ function Nav () {
   useEffect(()=>{
     //Only updating if we are in client mode of nextjs
     process.browser && setCurrPage(window.location.pathname); 
-    console.log(state);
+    console.log("state on reload:",state);
   }, [process.browser && window.location.pathname]);
 
   const logout = () => {
     window.localStorage.removeItem("auth");
     setState({user: {}, token: ""}); //resetting user information
-    console.log(state);
+    // console.log(state);
     router.push("/login");
     
   }
@@ -32,7 +32,7 @@ function Nav () {
      
       
 
-      {(state != null) ? (
+      {state != null  ? (
         <>
           <div className="dropdown">
             <button className="btn dropdown-toggle text-light" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

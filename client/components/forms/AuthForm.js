@@ -25,9 +25,13 @@ return(
       {profileUpdate &&
         <>
           <div className = 'form-group p-2'>
+            <small>
+              <label className = "text-muted"> Username </label>
+            </small>
             <div className = 'row'>
               <div className = 'col-sm-12'>
-              <input value = {username} type = "text" className = 'form-control' placeholder="Username" onChange = {(e) => setUsername(e.target.value)}/>
+
+                <input value = {username} type = "text" className = 'form-control' placeholder="Username" onChange = {(e) => setUsername(e.target.value)}/>
               </div>
             </div>              
           </div>

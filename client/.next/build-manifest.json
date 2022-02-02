@@ -39,6 +39,11 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/user/profile.js"
+    ],
+    "/user/updateProfile/update": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/user/updateProfile/update.js"
     ]
   },
   "ampFirstPages": []
