@@ -18,7 +18,7 @@ function Nav () {
 
   const logout = () => {
     window.localStorage.removeItem("auth");
-    setState({user: {}, token: ""}); //resetting user information
+    setState(null); //resetting user information
     // console.log(state);
     router.push("/login");
     

@@ -136,6 +136,10 @@ export const profileUpdate = async (req,res) => {
     if (req.body.lname){
       data.last_name = req.body.lname;
     }
+    if (req.body.image){
+      data.image = req.body.image;
+      console.log(data.image);
+    }
     if (req.body.pswd){
       if (req.body.pswd.length < 6){
         return res.status(400).send({

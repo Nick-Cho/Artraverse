@@ -31,7 +31,6 @@ function PostForm({content, setContent, postSubmit, handleImage, loading, image}
           ):
           (<CameraOutlined className = "mt-2" style = {{cursor: "pointer"}}/>)
         }
-        
         <input onChange = {handleImage} type = "file" accept = "images/*" hidden style = {{cursor: "pointer"}}/>
       </label>
     </div>

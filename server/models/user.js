@@ -35,7 +35,7 @@ const userSchema = new Schema({
     required: true,
   },
   about:{type: String},
-  photo:{type: String},
+  image:{url: String, public_id: String},
   //following: [{type: Schema.ObjectID, ref: "User"}],
   //followers: [{type: Schema.ObjectID, ref: "User"}],
 },

@@ -61,6 +61,7 @@ const Register = () => {
       <div className = 'row py-5'>
         <div className = 'col-md-6 offset-md-3'>
           <AuthForm 
+          profileUpdate={false}
           handleSubmit = {handleSubmit} 
           fname = {fname}
           setFname = {setFname}
