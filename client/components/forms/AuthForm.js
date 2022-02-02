@@ -71,7 +71,7 @@ return(
       <small>
         <label className = "text-muted"> Email </label>
       </small>
-      <input value = {email} type = "email" className = 'form-control' placeholder="Enter your email" onChange = {(e) => setEmail(e.target.value)}/>
+      <input disabled = {profileUpdate} value = {email} type = "email" className = 'form-control' placeholder="Enter your email" onChange = {(e) => setEmail(e.target.value)}/>
       <small className = 'form-text text-muted'>
         You can use letters, numbers and periods
       </small>
@@ -111,9 +111,12 @@ return(
 
     <div className = 'form-group p-2'>
       {/* Only disable button when email and password aren't present on the login page */}
-      <button disabled = { page === "login" ?
-                          !email || !pswd:
-                          !fname || !lname || !email || !secret || !pswd} className = "btn btn-primary col">
+      <button disabled = { 
+      profileUpdate ? 
+      loading :
+      page === "login" ?
+      !email || !pswd:
+      !fname || !lname || !email || !secret || !pswd} className = "btn btn-primary col">
         {page !== "login" &&(loading ? <SyncOutlined spin className ="py-1" /> : "Create Account")}
         {page === "login" && (loading ? <SyncOutlined spin className ="py-1" /> : "Login")}
       </button>

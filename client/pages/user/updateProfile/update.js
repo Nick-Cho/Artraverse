@@ -1,4 +1,4 @@
-import {useState, useContext} from "react";
+import {useState, useContext, useEffect} from "react";
 import {useRouter} from "next/router";
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -21,26 +21,35 @@ const ProfileUpdate = () => {
   const [loading, setLoading] = useState(false);
   const [state, setState] = useContext(UserContext);
   const router = useRouter();
+
+  useEffect(()=>{
+    if (state != null){
+      console.log("user from state called in update: ", state);
+    }
+    setUsername(state.user.username);
+    setAbout(state.user.about);
+    setFname(state.user.first_name);
+    setLname(state.user.last_name);
+    setEmail(state.user.email);
+
+  }, [state != null && state.user])
+
   const handleSubmit = async (e) =>{
     e.preventDefault(); //prevents browser from reloading
     // console.log(fname, lname, email, pswd, secret)
     setLoading(true);
    
-    const response = await axios.post(`/register`, {
+    const response = await axios.put(`/profile-update`, {
+    username,
+    about,
     fname,
     lname,
     email,
     pswd,
-    secret,
     });
     let res = response.response;
     console.log("register page api call data:",response);
     if (response.status == 200){
-      setFname("");
-      setLname("")
-      setEmail("");
-      setPswd("");
-      setSecret("");
       setOk(response.data.ok);
       setLoading(false);
     }
