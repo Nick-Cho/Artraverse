@@ -30,16 +30,18 @@ return(
             </small>
             <div className = 'row'>
               <div className = 'col-sm-12'>
-
                 <input value = {username} type = "text" className = 'form-control' placeholder="Username" onChange = {(e) => setUsername(e.target.value)}/>
               </div>
             </div>              
           </div>
           
           <div className = 'form-group p-2'>
+            <small>
+              <label className = "text-muted"> About </label>
+            </small>
             <div className = 'row'>
               <div className = 'col-sm-12'>
-              <input value = {about} type = "text" className = 'form-control' placeholder="About" onChange = {(e) => setAbout(e.target.value)}/>
+              <input value = {about} type = "text" className = 'form-control' placeholder="Write about yourself" onChange = {(e) => setAbout(e.target.value)}/>
               </div>
             </div>              
           </div>
@@ -50,24 +52,36 @@ return(
       <div className = 'form-group p-2'>
         <div className = 'row'>
           <div className = 'col-sm-6'>
-          <input value = {fname} type = "text" className = 'form-control' placeholder="First Name" onChange = {(e) => setFname(e.target.value)}/>
+            <small>
+              <label className = "text-muted"> First Name </label>
+            </small>
+            <input value = {fname} type = "text" className = 'form-control' placeholder="First Name" onChange = {(e) => setFname(e.target.value)}/>
           </div>
           <div className = 'col-sm-6'>
-          <input value = {lname} type = "text" className = 'form-control' placeholder = "Last Name" onChange = {(e) => setLname(e.target.value)}/>
+            <small>
+              <label className = "text-muted"> Last Name </label>
+            </small>
+            <input value = {lname} type = "text" className = 'form-control' placeholder = "Last Name" onChange = {(e) => setLname(e.target.value)}/>
           </div>  
         </div>              
       </div>
     )}
 
     <div className = 'form group p-2'>
-      <input value = {email} type = "email" className = 'form-control' placeholder="Email" onChange = {(e) => setEmail(e.target.value)}/>
+      <small>
+        <label className = "text-muted"> Email </label>
+      </small>
+      <input value = {email} type = "email" className = 'form-control' placeholder="Enter your email" onChange = {(e) => setEmail(e.target.value)}/>
       <small className = 'form-text text-muted'>
         You can use letters, numbers and periods
       </small>
     </div>
 
     <div className = 'form group p-2'>
-      <input value = {pswd} type = "password" className = 'form-control' placeholder="Password" onChange = {(e) => setPswd(e.target.value)}/>
+      <small>
+        <label className = "text-muted"> Password </label>
+      </small>
+      <input value = {pswd} type = "password" className = 'form-control' placeholder="Enter your password" onChange = {(e) => setPswd(e.target.value)}/>
       <small className = 'form-text text-muted'>
         Password must be at least 6 characters with. Use a mix of letters, numbers and symbols
       </small>
