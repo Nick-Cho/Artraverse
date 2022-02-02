@@ -32,11 +32,11 @@ function Nav () {
      
       
 
-      {(state) ? (
+      {(state != null) ? (
         <>
           <div className="dropdown">
             <button className="btn dropdown-toggle text-light" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              {state.user.first_name}
+              {state != null && state.user.first_name}
             </button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <li>
@@ -45,6 +45,11 @@ function Nav () {
                 </Link>    
               </li>
               
+               <li>
+                <Link href = "/user/updateProfile/update" >
+                  <a className = {`nav-link dropdown-item  ${currPage === "/user/profileUpdate/update" && "active"}`}>Update Profile</a>
+                </Link>    
+              </li>
               <li><a onClick = {logout} className = "dropdown-item nav-link"> Logout </a></li>
             </ul>
           </div>
