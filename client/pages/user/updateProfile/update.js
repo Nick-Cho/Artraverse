@@ -46,11 +46,11 @@ const ProfileUpdate = () => {
     lname,
     email,
     pswd,
+    secret
     });
-    let res = response.response;
     console.log("register page api call data:",response);
     if (response.status == 200){
-      setOk(response.data.ok);
+      setOk(true);
       setLoading(false);
     }
     else{
@@ -95,25 +95,11 @@ const ProfileUpdate = () => {
         <div className = "col">
           <Modal title = "Congratulations" visible = {ok} onCancel = {()=>{setOk(false)}} footer = {null}>
             <p>
-              Succesfully registered!
+              Succesfully updated profile!
             </p>
-            <Link href = "/login">
-              <a className = "btn btn-primary btn-sm">Login</a>
-            </Link>
           </Modal>
         </div>
       </div>
-
-      <div className = "row">
-        <div className = "col">
-          <p className = "text-center">Already registered?{" "}
-            <Link href = "/login">
-              <a >Login</a>
-            </Link>
-          </p>
-        </div>
-      </div>
-
     </div>
   )
 }

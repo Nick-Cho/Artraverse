@@ -121,3 +121,43 @@ export const forgotPassword = async (req,res) =>{
     })
   }
 }
+
+export const profileUpdate = async (req,res) => {
+  try{
+    console.log("profile update request body: ", req.body);
+    //data validation for if the fields are filled in
+    const data = {};
+    if (req.body.username){
+      data.username = req.body.username;
+    }
+    if (req.body.fname){
+      data.first_name = req.body.fname;
+    }
+    if (req.body.lname){
+      data.last_name = req.body.lname;
+    }
+    if (req.body.pswd){
+      if (req.body.pswd.length < 6){
+        return res.status(400).send({
+          error: "Password needs to be at least 6 characters long"
+        });
+      }
+      else{
+        data.password = await hashPassword(req.body.pswd);    
+      }
+    }
+    if (req.body.secret){
+      data.secret = req.body.secret;
+    }
+    let user = await User.findByIdAndUpdate(req.user._id, data, {new: true});
+    //console.log()
+    user.password = undefined;
+    user.secret = undefined;
+    res.status(200).send(user);
+  } catch (err) {
+    console.log(err);
+    if (err.code == 11000){
+      return res.status(400).send({error: "Username taken"})
+    }
+  }
+}

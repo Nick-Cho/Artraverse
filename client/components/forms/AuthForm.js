@@ -117,7 +117,8 @@ return(
       page === "login" ?
       !email || !pswd:
       !fname || !lname || !email || !secret || !pswd} className = "btn btn-primary col">
-        {page !== "login" &&(loading ? <SyncOutlined spin className ="py-1" /> : "Create Account")}
+        {profileUpdate == true && page !== "login" && (loading ? <SyncOutlined spin className ="py-1" /> : "Update") }
+        {page !== "login" && profileUpdate == false && (loading ? <SyncOutlined spin className ="py-1" /> : "Create Account")}
         {page === "login" && (loading ? <SyncOutlined spin className ="py-1" /> : "Login")}
       </button>
     </div>
