@@ -1,6 +1,11 @@
 import {SyncOutlined} from "@ant-design/icons";
 
 const AuthForm = ({
+  profileUpdate, //Tells the form whether we are on the profile update page or not
+  username,
+  setUsername,
+  about,
+  setAbout,
   handleSubmit,
   fname,
   setFname,
@@ -17,17 +22,37 @@ const AuthForm = ({
 }) => {
 return(
   <form onSubmit = {handleSubmit}>
+      {profileUpdate &&
+        <>
+          <div className = 'form-group p-2'>
+            <div className = 'row'>
+              <div className = 'col-sm-12'>
+              <input value = {username} type = "text" className = 'form-control' placeholder="Username" onChange = {(e) => setUsername(e.target.value)}/>
+              </div>
+            </div>              
+          </div>
+          
+          <div className = 'form-group p-2'>
+            <div className = 'row'>
+              <div className = 'col-sm-12'>
+              <input value = {about} type = "text" className = 'form-control' placeholder="About" onChange = {(e) => setAbout(e.target.value)}/>
+              </div>
+            </div>              
+          </div>
+        </>
+      }
+      
     {page !== 'login' &&(
-    <div className = 'form-group p-2'>
-      <div className = 'row'>
-        <div className = 'col-sm-6'>
-        <input value = {fname} type = "text" className = 'form-control' placeholder="First Name" onChange = {(e) => setFname(e.target.value)}/>
-        </div>
-        <div className = 'col-sm-6'>
-        <input value = {lname} type = "text" className = 'form-control' placeholder = "Last Name" onChange = {(e) => setLname(e.target.value)}/>
-        </div>  
-      </div>              
-    </div>
+      <div className = 'form-group p-2'>
+        <div className = 'row'>
+          <div className = 'col-sm-6'>
+          <input value = {fname} type = "text" className = 'form-control' placeholder="First Name" onChange = {(e) => setFname(e.target.value)}/>
+          </div>
+          <div className = 'col-sm-6'>
+          <input value = {lname} type = "text" className = 'form-control' placeholder = "Last Name" onChange = {(e) => setLname(e.target.value)}/>
+          </div>  
+        </div>              
+      </div>
     )}
 
     <div className = 'form group p-2'>

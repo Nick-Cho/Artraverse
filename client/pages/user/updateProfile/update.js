@@ -8,7 +8,10 @@ import Link from 'next/link';
 import AuthForm from '../../../components/forms/AuthForm.js'
 import { UserContext } from "../../../context/index.js";
 import { Router } from "next/router";
+import { EyeTwoTone } from "@ant-design/icons";
 const ProfileUpdate = () => {
+  const [username, setUsername] = useState("");
+  const [about,setAbout] = useState("");
   const [fname, setFname] = useState(''); 
   const [lname, setLname] = useState(''); 
   const [email, setEmail] = useState('');
@@ -58,6 +61,11 @@ const ProfileUpdate = () => {
       <div className = 'row py-5'>
         <div className = 'col-md-6 offset-md-3'>
           <AuthForm 
+          profileUpdate = {true}
+          username = {username}
+          setUsername = {setUsername}
+          about = {about}
+          setAbout = {setAbout}
           handleSubmit = {handleSubmit} 
           fname = {fname}
           setFname = {setFname}
