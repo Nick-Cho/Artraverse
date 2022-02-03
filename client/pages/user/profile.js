@@ -8,11 +8,6 @@ import { toast } from "react-toastify";
 import PostList from '../../components/cards/PostList'
 const Home = () => {
   const router = useRouter();
-
-  useEffect(()=>{
-    fetchUserPosts();
-  }, [])
-
   const [state, setState] = useContext(UserContext);
   //state
   const [content, setContent] = useState(""); //Content of the post
@@ -20,6 +15,26 @@ const Home = () => {
   const [loading, setLoading] = useState(false); //Boolean for if image is uploading or not
   //posts
   const [posts, setPosts] = useState([]);
+  //List of suggested followers
+  const [people, setPeople] = useState([]);
+  useEffect(()=>{
+    if (state){
+      fetchUserPosts();
+      findPeople();
+    }
+  }, [])
+
+  const findPeople = async () => {
+    const response = await axios.get("/find-people");
+    if (response.status === 200){
+      setPeople(response.data);
+      console.log(people);
+    }
+    if (response.status === 400){
+      toast.error(response.data.message)
+    }
+  }
+
   const postSubmit = async (e) => {
     e.preventDefault(); //prevents client from refreshing
     const response = await axios.post('/create-post', {content, image});

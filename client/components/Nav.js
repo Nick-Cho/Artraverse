@@ -46,8 +46,8 @@ function Nav () {
               </li>
               
                <li>
-                <Link href = "/user/updateProfile/update" >
-                  <a className = {`nav-link dropdown-item  ${currPage === "/user/profileUpdate/update" && "active"}`}>Update Profile</a>
+                <Link href = "/user/editProfile" >
+                  <a className = {`nav-link dropdown-item  ${currPage === "/user/editProfile" && "active"}`}>Update Profile</a>
                 </Link>    
               </li>
               <li><a onClick = {logout} className = "dropdown-item nav-link"> Logout </a></li>
