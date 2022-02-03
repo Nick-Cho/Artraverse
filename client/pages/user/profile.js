@@ -6,6 +6,7 @@ import {useRouter} from "next/router";
 import axios from 'axios';
 import { toast } from "react-toastify";
 import PostList from '../../components/cards/PostList'
+import SuggestedFollowers from "../../components/cards/SuggestedFollowers"
 const Home = () => {
   const router = useRouter();
   const [state, setState] = useContext(UserContext);
@@ -22,17 +23,20 @@ const Home = () => {
       fetchUserPosts();
       findPeople();
     }
-  }, [])
+  }, [state])
 
   const findPeople = async () => {
     const response = await axios.get("/find-people");
-    if (response.status === 200){
-      setPeople(response.data);
-      console.log(people);
+    //console.log("response from find people endpoint", response);
+    if (response ){
+      if (response.status === 200){
+        setPeople(response.data);
+      }
+      else if (response.status === 400){
+        toast.error(response.data.message)
+      }
     }
-    if (response.status === 400){
-      toast.error(response.data.message)
-    }
+    
   }
 
   const postSubmit = async (e) => {
@@ -116,7 +120,7 @@ const Home = () => {
         </div>
 
       <div className = "col-md-4">
-        <h2>SideBar</h2>
+        <SuggestedFollowers people={people}/>
       </div>
       </div>  
     </UserRoute>
