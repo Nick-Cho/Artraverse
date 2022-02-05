@@ -3,7 +3,7 @@ import Link from 'next/link';
 import {UserContext} from '../context/index';
 import {useRouter} from "next/router";
 import React from 'react';
-
+import {Avatar} from "antd"
 
 function Nav () {
   const [state, setState] = useContext(UserContext);
@@ -27,7 +27,9 @@ function Nav () {
   return (
   <nav className="nav bg-dark d-flex justify-content-left p-3">  
       <Link href = "/" >
-        <a className ={`nav-link text-light ${currPage === "/" && "active"}`}>Home</a>
+        <a className ={`nav-link text-light ${currPage === "/" && "active"}`}>
+          <Avatar src = "/images/logo.png" className="mr-2"/> Home
+          </a>
       </Link>
      
       

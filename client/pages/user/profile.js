@@ -39,6 +39,15 @@ const Home = () => {
     
   }
 
+  const handleFollow = (user) => {
+    // console.log("handle follow user: ", user);
+    try{
+      const response = await axios.put('/user-follow', {_id: user._id});
+    } catch(err){
+      console.log(err);
+    }
+  }
+
   const postSubmit = async (e) => {
     e.preventDefault(); //prevents client from refreshing
     const response = await axios.post('/create-post', {content, image});
@@ -120,7 +129,7 @@ const Home = () => {
         </div>
 
       <div className = "col-md-4">
-        <SuggestedFollowers people={people}/>
+        <SuggestedFollowers handleFollow={handleFollow} people={people}/>
       </div>
       </div>  
     </UserRoute>
