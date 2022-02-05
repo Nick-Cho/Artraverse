@@ -171,7 +171,7 @@ export const findPeople = async (req,res) => {
     const user = await User.findById(req.user._id);
     let following = user.following;
     following.push(user._id);
-    const people = await User.find({_id: {$nin: following}}).limit(10); //Gets 10 users in the database that the logged in user is not following
+    const people = await User.find({_id: {$nin: following}}).select("-password -secret").limit(10); //Gets 10 users in the database that the logged in user is not following
     res.status(200).send(people);
 
   } catch(err) {

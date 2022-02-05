@@ -10,14 +10,21 @@ function SuggestedFollowers({people}) {
 
   const router = useRouter();
 
-  useEffect(()=>{
-    console.log("people: ", people)
-  })
+  const imageSource = (user) =>{
+    if (user.image){
+      return user.image.url;
+    }
+    else{
+      return "/images/default.jpeg"
+    }
+  }
   return (
     <div>
       <List itemLayout="horizontal" dataSource = {people} renderItem={(user) => (
         <List.Item>
-          <List.Item.Meta title = {
+          <List.Item.Meta 
+          avatar = {<Avatar src ={imageSource(user)}/>}
+          title = {
           <div className = "d-flex justify-content-between">
             {user.username} 
             <span className = "text-primary" style = {{cursor: "pointer"}}>Follow</span>
