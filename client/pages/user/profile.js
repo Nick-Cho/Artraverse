@@ -42,7 +42,8 @@ const Home = () => {
   const handleFollow = (user) => {
     // console.log("handle follow user: ", user);
     try{
-      const response = await axios.put('/user-follow', {_id: user._id});
+      const response = axios.put('/user-follow', {_id: user._id});
+      console.log(response);
     } catch(err){
       console.log(err);
     }

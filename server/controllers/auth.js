@@ -179,3 +179,28 @@ export const findPeople = async (req,res) => {
     res.status(400).send({message: err});
   }
 }
+
+export const addFollower = async (req,res,next) =>{
+  try{
+    const user = await User.findByIdAndUpdate(req.body._id, {
+      $addToSet: {followers: req.user._id}, //use add to set to avoid duplicate followers 
+    });
+    next();
+  } catch (err){
+    console.log(err);
+  }
+}
+
+export const userFollow = async(req,res) =>{
+  try{
+    const user = await User.findByIdAndUpdate(req.user._id,{
+      $addToSet :{following: req.body._id},
+    }, 
+    {new: true,} //sends updated arguemnt
+    )
+    console.log(user);
+    res.status(200).send(user);  
+  } catch (err) {
+    console.log(err);
+  }
+}
