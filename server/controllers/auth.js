@@ -197,9 +197,9 @@ export const userFollow = async(req,res) =>{
       $addToSet :{following: req.body._id},
     }, 
     {new: true,} //sends updated arguemnt
-    )
+    ).select("-password -secret");
     console.log(user);
-    res.status(200).send(user);  
+    return res.send(user);  
   } catch (err) {
     console.log(err);
   }

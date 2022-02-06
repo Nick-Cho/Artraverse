@@ -39,11 +39,30 @@ const Home = () => {
     
   }
 
-  const handleFollow = (user) => {
-    // console.log("handle follow user: ", user);
+  const handleFollow =  async (user) => {
+    //console.log("handle follow user: ", user);
     try{
-      const response = axios.put('/user-follow', {_id: user._id});
-      console.log(response);
+      const response = axios.put('/user-follow', {_id: user._id})
+      .then((res) => {
+          response = res;
+          // console.log("reseponse from handlefollow", response)
+        });
+     
+      // update local storage, update user, keep token
+      let auth = JSON.parse(localStorage.getItem("auth"));
+      auth.user = response;
+      localStorage.setItem("auth", JSON.stringify(auth));
+
+      // update context
+      setState({...state, user: response});
+
+      //update suggested follower state
+      let filtered = people.filter((p)=>{p._id !== user._id});
+      setPeople(filtered);
+
+      //rerender the posts in posts page
+      toast.success(`Following ${user.name}`);
+      
     } catch(err){
       console.log(err);
     }
@@ -106,6 +125,7 @@ const Home = () => {
       console.log(err);
     }
   }
+
   return(
     <UserRoute>
       <div className = "container-fluid">
