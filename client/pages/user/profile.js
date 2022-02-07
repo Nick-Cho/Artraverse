@@ -8,7 +8,8 @@ import { toast } from "react-toastify";
 import PostList from '../../components/cards/PostList'
 import SuggestedFollowers from "../../components/cards/SuggestedFollowers"
 import Link from "next/link";
-
+import {Modal} from "antd";
+import CommentForm from "../../components/forms/CommentForm"
 const Home = () => {
   const router = useRouter();
   const [state, setState] = useContext(UserContext);
@@ -20,8 +21,12 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   //List of suggested followers
   const [people, setPeople] = useState([]);
-  //Variable to track the amount of users are being followed by a given user
-  const [numFollowing, setNumFollowing] = useState("");
+  //comments
+  const [comment,setComment] = useState("");
+  //keeps track of if we should show the comments text box or not
+  const [showComment, setShowComment] = useState(false)
+  //indicates which post to pop comment textbox under
+  const [currentPost, setCurrentPost] = useState({});  
 
   useEffect(()=>{
     if (state){
@@ -71,7 +76,7 @@ const Home = () => {
   const handleFollow =  async (user) => {
     //console.log("handle follow user: ", user);
     try{
-      const response;
+      const response = {};
       const res = await axios.put('/user-follow', {_id: user._id})
       .then((r) => {
           response = r;
@@ -156,7 +161,32 @@ const Home = () => {
       console.log(err);
     }
   }
+  
+  const handleComment = (post) => {
+    setCurrentPost(post);
+    setShowComment(true);
+  }
 
+  const addComment = async (e) => {
+    e.preventDefault();
+    // console.log("Adding comment to this post: ", currentPost._id);
+    // console.log("Comment: ", comment);
+    try{
+      const response = await axios.put("/add-comment", {
+        postId: currentPost._d, 
+        comment,
+      })
+      console.log("add comment", respnose);
+      setComment("");
+      setVisible(false);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const removeComment = async () => {
+    
+  }
   return(
     <UserRoute>
       <div className = "container-fluid">
@@ -176,24 +206,35 @@ const Home = () => {
           handleImage = {handleImage}
           loading = {loading}
           image={image}/>
+          
           <br/>
+
           <PostList 
           posts = {posts} 
           handleDelete={handleDelete} 
           handleLike={handleLike} 
           handleUnlike={handleUnlike}
+          handleComment={handleComment}
           />
         </div>
 
-      <div className = "col-md-4">
-        {state && state.user && state.user.following &&
-        <Link href = {`/user/following`}>
-          <a className = "h6">{state.user.following.length} Following</a>
-        </Link>
-        
-        }
-        <SuggestedFollowers handleFollow={handleFollow} people={people}/>
-      </div>
+        <div className = "col-md-4">
+          {state && state.user && state.user.following &&
+          <Link href = {`/user/following`}>
+            <a className = "h6">{state.user.following.length} Following</a>
+          </Link>
+          
+          }
+          <SuggestedFollowers handleFollow={handleFollow} people={people}/>
+        </div>
+        <Modal 
+        visible = {showComment} 
+        onCancel={()=>setShowComment(false)} 
+        title = "Comment"
+        footer={null}
+        >
+        <CommentForm addComment={addComment} comment={comment} setComment={setComment}/>
+        </Modal>  
       </div>  
     </UserRoute>
   );

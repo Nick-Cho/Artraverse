@@ -7,7 +7,7 @@ import {Avatar} from 'antd';
 import PostImage from '../images/PostImage'
 import {HeartOutlined, HeartFilled, CommentOutlined, EditOutlined, DeleteOutlined} from "@ant-design/icons"
 import {imageSource} from "../../functions"
-function PostList({posts, handleDelete, handleLike, handleUnlike}) {
+function PostList({posts, handleDelete, handleLike, handleUnlike, handleComment}) {
   const [state, setState] = useContext(UserContext);
   const router = useRouter();
   
@@ -54,7 +54,10 @@ function PostList({posts, handleDelete, handleLike, handleUnlike}) {
               {post.likes.length} 
               {post.likes.length == 1 ? " like" : " likes"}
             </div>
-            <CommentOutlined style={{cursor: "pointer"}} className = "text-danger pt-2 h5 px-2"/>
+            <CommentOutlined 
+            onClick = {()=>handleComment(post)}
+            style={{cursor: "pointer"}} 
+            className = "text-danger pt-2 h5 px-2"/>
             <div className = "pt-2 pl-4" style ={{marginRight: "2rem"}}>comments</div>
 
             {state && state.user && state.user._id === post.postedBy._id && (

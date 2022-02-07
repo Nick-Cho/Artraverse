@@ -5,10 +5,10 @@ function PostImage({url}) {
     
     <div style = {{
         backgroundImage: "url(" + url + ")",
-        backgroundRepewat: "no-repeat",
+        backgroundRepeat: "no-repeat",
         backgroundPosition: "center center",
         backgroundSize: "cover",
-        height: "500px",
+        height: "900px",
       }}>
 
     </div>
