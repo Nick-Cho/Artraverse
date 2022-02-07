@@ -85,3 +85,19 @@ export const deletePost = async (req,res) =>{
     console.log(err);
   }
 }
+
+export const newsFeed = async (req,res) =>{
+  try{
+    const user = await User.findById(req.user._id);
+    let following = user.following;
+    following.push(req.user._id);
+
+    const posts = await Post.find({postedBy: {$in: following}})
+    .populate("postedBy")
+    .sort({createdAt: -1})
+    .limit(9);
+    res.status(200).send(posts);
+  } catch(err){
+    console.log()
+  }
+}

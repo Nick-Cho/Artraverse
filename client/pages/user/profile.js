@@ -20,7 +20,7 @@ const Home = () => {
   const [people, setPeople] = useState([]);
   useEffect(()=>{
     if (state){
-      fetchUserPosts();
+      newsFeed();
       findPeople();
     }
   }, [state])
@@ -61,8 +61,9 @@ const Home = () => {
       setPeople(filtered);
 
       //rerender the posts in posts page
-      toast.success(`Following ${user.name}`);
-      
+      newsFeed();
+      toast.success(`Following ${user.username}`);
+
     } catch(err){
       console.log(err);
     }
@@ -99,9 +100,10 @@ const Home = () => {
     //console.log("uploaded image data:", response);
   }
 
-  const fetchUserPosts = async () => {
+  const newsFeed = async () => {
     try{
-      const response = await axios.get('/user-posts');
+      const response = await axios.get('/news-feed');
+      console.log(response);
       setPosts(response.data);
       // console.log("response data: ", response.data);
       // console.log("posts being sent to postslist component:", posts);
