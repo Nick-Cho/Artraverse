@@ -220,7 +220,6 @@ export const removeFollower = async (req,res,next) => {
   try{
     const user = await User.findByIdAndUpdate(req.body._id, {
       $pull: {followers: req.user._id},
-
     });
     next();
   } catch (err) {

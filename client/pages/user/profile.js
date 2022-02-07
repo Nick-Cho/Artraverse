@@ -19,8 +19,13 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   //List of suggested followers
   const [people, setPeople] = useState([]);
+  //Variable to track the amount of users are being followed by a given user
+  const [numFollowing, setNumFollowing] = useState("");
+
   useEffect(()=>{
     if (state){
+      //console.log("useeffect state: ", state);
+      // setNumFollowing(state.user.following);
       newsFeed();
       findPeople();
     }
@@ -43,20 +48,20 @@ const Home = () => {
   const handleFollow =  async (user) => {
     //console.log("handle follow user: ", user);
     try{
-      const response = axios.put('/user-follow', {_id: user._id})
-      .then((res) => {
-          response = res;
-          // console.log("reseponse from handlefollow", response)
+      const response;
+      const res = await axios.put('/user-follow', {_id: user._id})
+      .then((r) => {
+          response = r;
         });
-     
+      // console.log("reseponse from handlefollow", response)
       // update local storage, update user, keep token
       let auth = JSON.parse(localStorage.getItem("auth"));
-      auth.user = response;
+      auth.user = response.data;
       localStorage.setItem("auth", JSON.stringify(auth));
 
       // update context
-      setState({...state, user: response});
-
+      setState({...state, user: response.data});
+      console.log("logging from handle follow. User: ", state.user);
       //update suggested follower state
       let filtered = people.filter((p)=>{p._id !== user._id});
       setPeople(filtered);
@@ -105,10 +110,9 @@ const Home = () => {
   const newsFeed = async () => {
     try{
       const response = await axios.get('/news-feed');
-      console.log(response);
+      //console.log(response);
       setPosts(response.data);
-      // console.log("response data: ", response.data);
-      // console.log("posts being sent to postslist component:", posts);
+      
       
     } catch (err){
       console.log(err)
