@@ -6,8 +6,9 @@ import {UserContext} from '../../context/index';
 import axios from "axios";
 import {RollbackOutlined} from "@ant-design/icons"
 import Link from "next/link"
+import { toast } from "react-toastify";
 function Following() {
-  const [state] = useContext(UserContext);
+  const [state, setState] = useContext(UserContext);
   const router = useRouter();
   const [people,setPeople] = useState([]);
 
@@ -20,7 +21,7 @@ function Following() {
   const fetchFollowing = async () => {
     try{
       const response = await axios.get("/user-following");
-      console.log("Following list", response);
+      //console.log("Following list", response);
       setPeople(response.data);
     } catch(err){
       console.log(err);
@@ -35,8 +36,25 @@ function Following() {
     }
   }
 
-  const handleUnfollow = async() => {
+  const handleUnfollow = async (user) => {
+    try {
+      const response = await axios.put("/user-unfollow", {_id: user._id});
+      let auth = JSON.parse(localStorage.getItem("auth"));
+      auth.user = response.data;
+      localStorage.setItem("auth", JSON.stringify(auth));
 
+      // update context
+      setState({...state, user: response.data});
+
+      //update suggested follower state
+      let filtered = people.filter((p)=>{p._id !== user._id});
+      setPeople(filtered);
+      fetchFollowing();
+      toast.error(`Unfollowed ${user.username}`);
+
+    } catch (err) {
+      console.log(err);
+    }
   }
   return (
     <div className = "row col-md-6 offset-md-3">

@@ -60,6 +60,7 @@ const Home = () => {
       //update suggested follower state
       let filtered = people.filter((p)=>{p._id !== user._id});
       setPeople(filtered);
+      findPeople();
 
       //rerender the posts in posts page
       newsFeed();
