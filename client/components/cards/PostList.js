@@ -6,7 +6,7 @@ import moment from 'moment';
 import {Avatar} from 'antd';
 import PostImage from '../images/PostImage'
 import {HeartOutlined, HeartFilled, CommentOutlined, EditOutlined, DeleteOutlined} from "@ant-design/icons"
-function PostList({posts, handleDelete}) {
+function PostList({posts, handleDelete, handleLike, handleUnlike}) {
   const [state, setState] = useContext(UserContext);
   const router = useRouter();
   return(
@@ -25,7 +25,7 @@ function PostList({posts, handleDelete}) {
         <div className = "card-footer">
           <PostImage url = {post.image.url}/>
           <div className = "d-flex pt-2">
-            <HeartOutlined style={{cursor: "pointer"}} className = "text-danger pt-2 h5 px-2"/>
+            <HeartOutlined onClick ={()=> handleLike(post._id)} style={{cursor: "pointer"}} className = "text-danger pt-2 h5 px-2"/>
             <div className = "pt-2 pl-4" style ={{marginRight: "2rem"}}>likes</div>
             <CommentOutlined style={{cursor: "pointer"}} className = "text-danger pt-2 h5 px-2"/>
             <div className = "pt-2 pl-4" style ={{marginRight: "2rem"}}>comments</div>

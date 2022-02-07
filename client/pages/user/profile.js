@@ -31,6 +31,26 @@ const Home = () => {
     }
   }, [state])
 
+  const handleLike = async (_id) => {
+    // console.log("liked post: ", _id);
+    try{
+      const response = await axios.put('/liked-post', {_id});
+      console.log('liked: ', data)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const handleUnlike = async (_id) => {
+    //console.log("unliked post: ",_id);
+    try{
+      const response = await axios.put('/unliked-post', {_id});
+      console.log('unliked: ', data)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const findPeople = async () => {
     const response = await axios.get("/find-people");
     //console.log("response from find people endpoint", response);
@@ -154,7 +174,12 @@ const Home = () => {
           loading = {loading}
           image={image}/>
           <br/>
-          <PostList posts = {posts} handleDelete={handleDelete}/>
+          <PostList 
+          posts = {posts} 
+          handleDelete={handleDelete} 
+          handleLike={handleLike} 
+          handleUnlike={handleUnlike}
+          />
         </div>
 
       <div className = "col-md-4">
