@@ -173,12 +173,13 @@ const Home = () => {
     // console.log("Comment: ", comment);
     try{
       const response = await axios.put("/add-comment", {
-        postId: currentPost._d, 
+        postId: currentPost._id, 
         comment,
       })
-      console.log("add comment", respnose);
+      //console.log("add comment", response);
       setComment("");
-      setVisible(false);
+      setShowComment(false);
+      newsFeed();
     } catch (err) {
       console.log(err);
     }

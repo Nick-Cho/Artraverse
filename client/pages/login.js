@@ -31,7 +31,7 @@ const Login = () => {
       });
       //saving  token in local storage
       window.localStorage.setItem('auth', JSON.stringify(response.data));
-      router.push("/"); //redirects user to home page
+      router.push("/user/profile"); //redirects user to home page
     }
     else if (response.status == 400){
       toast.error(response.data.message);
@@ -41,7 +41,7 @@ const Login = () => {
 
   //Bringing user to home page if there is already a JWT token
   if (state && state.token){
-    router.push("/");
+    router.push("/user/profile");
   }
 
   return (

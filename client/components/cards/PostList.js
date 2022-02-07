@@ -3,6 +3,7 @@ import {UserContext} from "../../context/index.js";
 import {useContext} from "react";
 import {useRouter} from "next/router";
 import moment from 'moment';
+import Link from "next/link"
 import {Avatar} from 'antd';
 import PostImage from '../images/PostImage'
 import {HeartOutlined, HeartFilled, CommentOutlined, EditOutlined, DeleteOutlined} from "@ant-design/icons"
@@ -29,7 +30,7 @@ function PostList({posts, handleDelete, handleLike, handleUnlike, handleComment}
           <PostImage url = {post.image.url}/>
           <div className = "d-flex pt-2">
             
-            {post.likes.includes(state.user._id) ? 
+            {state && state.user && post.likes && post.likes.includes(state.user._id) ? 
             (
               <>
                 <HeartFilled
@@ -58,7 +59,16 @@ function PostList({posts, handleDelete, handleLike, handleUnlike, handleComment}
             onClick = {()=>handleComment(post)}
             style={{cursor: "pointer"}} 
             className = "text-danger pt-2 h5 px-2"/>
-            <div className = "pt-2 pl-4" style ={{marginRight: "2rem"}}>comments</div>
+            
+            <div className = "pt-2 pl-4" style ={{marginRight: "2rem"}}>
+              <Link href = {`/post/${post._id}`}>
+                <a> 
+                  {post.comments.length}
+                  {post.comments.length == 1 ? " comment" : " comments"}
+                </a>
+              </Link>
+              
+              </div>
 
             {state && state.user && state.user._id === post.postedBy._id && (
               <>

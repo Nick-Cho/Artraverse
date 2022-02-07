@@ -94,6 +94,7 @@ export const newsFeed = async (req,res) =>{
 
     const posts = await Post.find({postedBy: {$in: following}})
     .populate("postedBy")
+    .populate('comments.postedBy')
     .sort({createdAt: -1})
     .limit(9);
     res.status(200).send(posts);
@@ -124,6 +125,38 @@ export const unlikePost = async (req,res) =>{
     );
     res.json(post);
   } catch (err) {
+    console.log(err);
+  }
+}
+
+export const addComment = async(req,res) => {
+  try{
+    const {postId, comment} = req.body;
+    const post = await Post.findByIdAndUpdate(postId,{
+      $push: {comments: {text: comment, postedBy: req.user._id}},
+      },
+      {new: true}
+    )
+    .populate('postedBy')
+    .populate('comments.postedBy');
+    res.json(post);
+
+  } catch(err) {
+    console.log(err);
+  }
+}
+
+export const removeComment = async(req,res) => {
+  try{
+    const {postId, comment} = req.body;
+    const post = await Post.findByIdAndUpdate(postId,{
+      $pull: {comments: {_id: comment._id}},
+      },
+      {new: true}
+    )
+    res.json(post);
+
+  } catch(err) {
     console.log(err);
   }
 }
