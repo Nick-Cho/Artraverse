@@ -9,6 +9,7 @@ import {HeartOutlined, HeartFilled, CommentOutlined, EditOutlined, DeleteOutline
 function PostList({posts, handleDelete, handleLike, handleUnlike}) {
   const [state, setState] = useContext(UserContext);
   const router = useRouter();
+  
   return(
     <> {posts && posts.map((post) => (
         <div key = {post._id} className = "card mb-5">
@@ -25,7 +26,28 @@ function PostList({posts, handleDelete, handleLike, handleUnlike}) {
         <div className = "card-footer">
           <PostImage url = {post.image.url}/>
           <div className = "d-flex pt-2">
-            <HeartOutlined onClick ={()=> handleLike(post._id)} style={{cursor: "pointer"}} className = "text-danger pt-2 h5 px-2"/>
+            
+            {post.likes.includes(state.user._id) ? 
+            (
+              <>
+                <HeartFilled
+                onClick ={()=> handleUnlike(post._id)} 
+                style={{cursor: "pointer"}} 
+                className = "text-danger pt-2 h5 px-2"
+                />
+              </>
+            ) :
+            (
+              <>
+                <HeartOutlined 
+                onClick ={()=> handleLike(post._id)} 
+                style={{cursor: "pointer"}} 
+                className = "text-danger pt-2 h5 px-2"
+                />  
+              </>
+            )}
+
+            
             <div className = "pt-2 pl-4" style ={{marginRight: "2rem"}}>likes</div>
             <CommentOutlined style={{cursor: "pointer"}} className = "text-danger pt-2 h5 px-2"/>
             <div className = "pt-2 pl-4" style ={{marginRight: "2rem"}}>comments</div>

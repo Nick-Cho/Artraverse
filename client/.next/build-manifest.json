@@ -25,10 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/user/following": [
+    "/login": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/user/following.js"
+      "static/chunks/pages/login.js"
     ],
     "/user/profile": [
       "static/chunks/webpack.js",
