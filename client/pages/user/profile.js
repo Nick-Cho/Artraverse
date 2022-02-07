@@ -7,6 +7,7 @@ import axios from 'axios';
 import { toast } from "react-toastify";
 import PostList from '../../components/cards/PostList'
 import SuggestedFollowers from "../../components/cards/SuggestedFollowers"
+import Link from "next/link";
 const Home = () => {
   const router = useRouter();
   const [state, setState] = useContext(UserContext);
@@ -77,7 +78,7 @@ const Home = () => {
       toast.error(response.data.message);
     }
     else{
-      fetchUserPosts();
+      newsFeed();
       toast.success('Post created');
       setContent("");
       setImage({});
@@ -121,7 +122,7 @@ const Home = () => {
       if (response.status == 200){
         toast.error('Post Deleted!');
       }
-      fetchUserPosts();
+      newsFeed();
     } 
     catch(err){
       console.log(err);
@@ -152,6 +153,12 @@ const Home = () => {
         </div>
 
       <div className = "col-md-4">
+        {state && state.user && state.user.following &&
+        <Link href = {`/user/following`}>
+          <a className = "h6">{state.user.following.length} Following</a>
+        </Link>
+        
+        }
         <SuggestedFollowers handleFollow={handleFollow} people={people}/>
       </div>
       </div>  
