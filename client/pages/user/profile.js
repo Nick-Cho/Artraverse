@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import PostList from '../../components/cards/PostList'
 import SuggestedFollowers from "../../components/cards/SuggestedFollowers"
 import Link from "next/link";
+
 const Home = () => {
   const router = useRouter();
   const [state, setState] = useContext(UserContext);
@@ -35,7 +36,7 @@ const Home = () => {
     // console.log("liked post: ", _id);
     try{
       const response = await axios.put('/liked-post', {_id});
-      console.log('liked: ', response);
+      //console.log('liked: ', response);
       newsFeed();
     } catch (err) {
       console.log(err);
@@ -46,7 +47,7 @@ const Home = () => {
     //console.log("unliked post: ",_id);
     try{
       const response = await axios.put('/unliked-post', {_id});
-      console.log('unliked: ', response);
+      //console.log('unliked: ', response);
       newsFeed();
     } catch (err) {
       console.log(err);

@@ -6,6 +6,7 @@ import moment from 'moment';
 import {Avatar} from 'antd';
 import PostImage from '../images/PostImage'
 import {HeartOutlined, HeartFilled, CommentOutlined, EditOutlined, DeleteOutlined} from "@ant-design/icons"
+import {imageSource} from "../../functions"
 function PostList({posts, handleDelete, handleLike, handleUnlike}) {
   const [state, setState] = useContext(UserContext);
   const router = useRouter();
@@ -15,7 +16,8 @@ function PostList({posts, handleDelete, handleLike, handleUnlike}) {
         <div key = {post._id} className = "card mb-5">
         <div className = "card-header">
           <div>
-            <Avatar size = {40} classsName="mb-2">{post.postedBy.first_name[0]}</Avatar>{" "}       
+            {/* <Avatar size = {40} classsName="mb-2">{post.postedBy.first_name[0]}</Avatar>{" "}        */}
+            <Avatar size = {40} classsName="mb-2" src={imageSource(post.postedBy)}/>
             <span className="pt-2 ml-3" style = {{marginLeft: "0.5rem"}}>{post.postedBy.first_name}</span>
             <span className="pt-2 ml-3" style = {{marginLeft: "0.5rem"}}>{moment(post.createdAt).fromNow()}</span>
           </div>
@@ -48,7 +50,10 @@ function PostList({posts, handleDelete, handleLike, handleUnlike}) {
             )}
 
             
-            <div className = "pt-2 pl-4" style ={{marginRight: "2rem"}}>likes</div>
+            <div className = "pt-2 pl-4" style ={{marginRight: "2rem"}}>
+              {post.likes.length} 
+              {post.likes.length == 1 ? " like" : " likes"}
+            </div>
             <CommentOutlined style={{cursor: "pointer"}} className = "text-danger pt-2 h5 px-2"/>
             <div className = "pt-2 pl-4" style ={{marginRight: "2rem"}}>comments</div>
 
