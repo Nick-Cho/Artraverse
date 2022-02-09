@@ -56,7 +56,9 @@ export const postsByUser = async (req,res) => {
 
 export const userPost = async (req,res) => {
   try{
-    const post = await Post.findById(req.params._id);
+    const post = await Post.findById(req.params._id)
+    .populate("postedBy")
+    .populate('comments.postedBy');
     res.status(200).send(post);
   } catch (error) {
     console.log(err);
