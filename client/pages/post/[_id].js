@@ -3,7 +3,9 @@ import axios from "axios";
 import {useRouter} from "next/router";
 import UserRoute from "../../components/routes/UserRoute"
 import {toast} from "react-toastify";
-
+import Post from '../../components/cards/Post';
+import Link from 'next/link';
+import {RollbackOutlined} from '@ant-design/icons'
 function PostComments() {
   const [post,setPost] = useState({});
   const router = useRouter();
@@ -24,9 +26,14 @@ function PostComments() {
   }
   return (
     <div>
-      <pre>
-      {JSON.stringify(post, null, 4)}
-      </pre>
+      <div className = "row col-md-8 offset-md-2 ">
+        <Post post={post} commentsCount={100}/>
+      </div>
+      <Link href = "/user/profile">
+        <a className = "d-flex justify-content-center p-5">
+          <RollbackOutlined/>
+        </a>
+      </Link>
     </div>
   )
 }
