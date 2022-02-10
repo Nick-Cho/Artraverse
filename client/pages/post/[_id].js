@@ -24,10 +24,25 @@ function PostComments() {
       console.log(err);
     }
   }
+
+  const removeComment = async(postId, comment) => {
+    // console.log(postId, comment);
+    let answer = window.confirm("Are you sure you want to delete this comment?")
+    
+    try {
+      const response = await axios.put("/remove-comment", {postId,comment})
+      console.log("Comment removed data: ", response);
+      fetchPost(); //refreshing post to show comment is removed
+    } 
+    catch(err){
+      console.log(err);
+    }
+  }
+
   return (
     <div>
       <div className = "row col-md-8 offset-md-2 ">
-        <Post post={post} commentsCount={100}/>
+        <Post post={post} commentsCount={100} removeComment = {removeComment}/>
       </div>
       <Link href = "/user/profile">
         <a className = "d-flex justify-content-center p-5">

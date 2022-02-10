@@ -8,7 +8,15 @@ import {Avatar} from 'antd';
 import PostImage from '../images/PostImage'
 import {HeartOutlined, HeartFilled, CommentOutlined, EditOutlined, DeleteOutlined} from "@ant-design/icons"
 import {imageSource} from "../../functions"
-function Post({post, handleDelete, handleLike, handleUnlike, handleComment,commentsCount}) {
+function Post({
+  post, 
+  handleDelete, 
+  handleLike, 
+  handleUnlike, 
+  handleComment,
+  commentsCount, 
+  removeComment
+}) {
   const [state, setState] = useContext(UserContext);
   const router = useRouter();
   
@@ -88,7 +96,10 @@ function Post({post, handleDelete, handleLike, handleUnlike, handleComment,comme
             )}
           </div>
         
-          <ul className = "list-group">
+          <ul 
+          className = "list-group"
+          style = {{maxHeight: "150px", overflow:"scroll"}}    
+          >
             {post.comments.length > 0 && post.comments.slice(0,commentsCount).map((comment)=>(
               <li className = "list-group-item d-flex justify-content-between align-items-center">
                 <div className = "ms-2 me-auto">
@@ -101,6 +112,16 @@ function Post({post, handleDelete, handleLike, handleUnlike, handleComment,comme
                 </div>
                 <span className = "badge rounded-pill text-muted">
                   {moment(comment.created).fromNow()}
+                  {state && state.user && state.user._id === comment.postedBy._id && (
+                    <div className = "mt-2 d-flex flex-row-reverse">
+                      <DeleteOutlined 
+                      onClick = {()=> removeComment(post._id, comment)}
+                      className = "justify-content-right pl-1 text-danger"
+                      style = {{cursor: "pointer"}}
+                      />
+                    </div>
+                  )
+                  }
                 </span>       
               </li>
               )
