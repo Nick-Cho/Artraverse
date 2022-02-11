@@ -17,12 +17,13 @@ import {
   userFollowing,
   removeFollower,
   userUnfollow,
-  searchUser
+  searchUser,
+  getUser
 } from '../controllers/auth'
 
 router.post('/register', register);
 router.post('/login', login);
-router.get('/current-user', requireSignIn, currentUser, ); 
+router.get('/current-user', requireSignIn, currentUser); 
 router.post('/forgot-password', forgotPassword);
 
 router.put('/profile-update', requireSignIn, profileUpdate);
@@ -33,5 +34,6 @@ router.get('/user-following', requireSignIn, userFollowing)
 router.put('/user-unfollow',requireSignIn, removeFollower, userUnfollow)
 
 router.get("/search-user/:query", searchUser);
+router.get("/user/:username", getUser);
 
 module.exports = router;

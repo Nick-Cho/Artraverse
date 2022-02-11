@@ -36,7 +36,7 @@ const ProfileUpdate = () => {
     setEmail(state.user.email);
     setImage(state.user.image);
 
-  }, [state != null && state.user])
+  }, [state  && state.user])
 
   const handleSubmit = async (e) =>{
     e.preventDefault(); //prevents browser from reloading

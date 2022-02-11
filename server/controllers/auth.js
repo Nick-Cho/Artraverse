@@ -138,7 +138,9 @@ export const profileUpdate = async (req,res) => {
     }
     if (req.body.image){
       data.image = req.body.image;
-      
+    }
+    if(req.body.about){
+      data.about = req.body.about;
     }
     if (req.body.pswd){
       if (req.body.pswd.length < 6){
@@ -254,6 +256,15 @@ export const searchUser = async(req,res) => {
     //console.log(user);
     res.status(200).send(user);
   } catch (err) {
+    console.log(err);
+  }
+}
+
+export const getUser =async (req,res)=> {
+  try{
+    const user = await User.findOne({username: req.params.username}).select('-password -secret');
+    res.status(200).send(user);
+  }catch( err) {
     console.log(err);
   }
 }
