@@ -10,7 +10,7 @@ import SuggestedFollowers from "../../components/cards/SuggestedFollowers"
 import Link from "next/link";
 import {Modal, Pagination} from "antd";
 import CommentForm from "../../components/forms/CommentForm"
-
+import Search from "../../components/Search"
 const Home = () => {
   const router = useRouter();
   const [state, setState] = useContext(UserContext);
@@ -243,15 +243,20 @@ const Home = () => {
           handleComment={handleComment}
           removeComment = {removeComment}
           />
+
+          <Pagination  
+          current={page} 
+          total = {(totalPosts/3)*10} //shows 3 posts on each page
+          onChange={(value)=>{setPage(value)}}
+          className = "pb-5"
+          />
         </div>
 
-        <Pagination  
-        current={page} 
-        total = {(totalPosts/3)*10} //shows 3 posts on each page
-        onChange={(value)=>{setPage(value)}}
-        />
+        
         
         <div className = "col-md-4">
+          <Search/>
+          <br/>
           {state && state.user && state.user.following &&
           <Link href = {`/user/following`}>
             <a className = "h6">{state.user.following.length} Following</a>
