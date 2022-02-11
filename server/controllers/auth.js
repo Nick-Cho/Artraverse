@@ -250,7 +250,7 @@ export const searchUser = async(req,res) => {
         {"first_name": {$regex: query, $options: '/i'}}, //makes query case insensitive
         {"username": {$regex: query, $options: '/i'}},
       ]
-    }).select('_id first_name username image');
+    }).select('_id first_name username image followers');
     //console.log(user);
     res.status(200).send(user);
   } catch (err) {

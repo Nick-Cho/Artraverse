@@ -81,7 +81,6 @@ function Search() {
           <input 
           onChange= {(e)=>{
             setQuery(e.target.value);
-            setResult([]);
           }} 
           value = {query}
           className = "form-control"
