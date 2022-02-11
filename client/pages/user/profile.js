@@ -101,6 +101,7 @@ const Home = () => {
       localStorage.setItem("auth", JSON.stringify(auth));
 
       // update context
+      
       setState({...state, user: response.data});
       console.log("logging from handle follow. User: ", state.user);
       //update suggested follower state
@@ -255,7 +256,7 @@ const Home = () => {
         
         
         <div className = "col-md-4">
-          <Search handleFollow ={handleFollow}/>
+          <Search/>
           <br/>
           {state && state.user && state.user.following &&
           <Link href = {`/user/following`}>

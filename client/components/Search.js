@@ -2,7 +2,8 @@ import {useState,useContext} from "react";
 import {UserContext} from "../context/index";
 import axios from 'axios';
 import SuggestedFollowers from "../components/cards/SuggestedFollowers";
-function Search({handleFollow}) {
+import {toast} from "react-toastify"
+function Search() {
   const [state,setState] = useContext(UserContext);
   const [query, setQuery] = useState("") //tracks the search bar user input
   const [result, setResult] = useState([]);
@@ -21,6 +22,55 @@ function Search({handleFollow}) {
       console.log(err);
     }
   }
+
+  const handleFollow =  async (user) => {
+    //console.log("handle follow user: ", user);
+    try{
+      const response = {};
+      await axios.put('/user-follow', {_id: user._id})
+      .then((r) => {
+          response = r;
+        });
+      // console.log("reseponse from handlefollow", response)
+      // update local storage, update user, keep token
+      let auth = JSON.parse(localStorage.getItem("auth"));
+      auth.user = response.data;
+      localStorage.setItem("auth", JSON.stringify(auth));
+
+      // update context
+      
+      setState({...state, user: response.data});
+      console.log("logging from handle follow. User: ", state.user);
+      //update suggested follower state
+      let filtered = result.filter((p)=>{p._id !== user._id});
+      setResult(filtered);
+      
+      toast.success(`Following ${user.username}`);
+
+    } catch(err){
+      console.log(err);
+    }
+  }
+   const handleUnfollow = async (user) => {
+    try {
+      const response = await axios.put("/user-unfollow", {_id: user._id});
+      let auth = JSON.parse(localStorage.getItem("auth"));
+      auth.user = response.data;
+      localStorage.setItem("auth", JSON.stringify(auth));
+
+      // update context
+      setState({...state, user: response.data});
+
+      //update suggested follower state
+      let filtered = result.filter((p)=>{p._id !== user._id});
+      setResult(filtered);
+      toast.error(`Unfollowed ${user.username}`);
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <>
       <form 
@@ -53,6 +103,7 @@ function Search({handleFollow}) {
       <SuggestedFollowers 
       people = {result} 
       handleFollow={handleFollow}
+      handleUnfollow= {handleUnfollow}
       />
       }
     

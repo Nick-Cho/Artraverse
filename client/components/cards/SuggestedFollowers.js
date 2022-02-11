@@ -5,7 +5,7 @@ import {useRouter} from "next/router";
 import {UserContext} from '../../context/index';
 import {imageSource} from '../../functions'
 
-function SuggestedFollowers({people, handleFollow}) {
+function SuggestedFollowers({people, handleFollow, handleUnfollow}) {
   const [state] = useContext(UserContext);
   const router = useRouter();
 
@@ -17,8 +17,16 @@ function SuggestedFollowers({people, handleFollow}) {
           avatar = {<Avatar src ={imageSource(user)}/>}
           title = {
           <div className = "d-flex justify-content-between">
-            {user.username} 
-            <span onClick={() => handleFollow(user)} className = "text-primary" style = {{cursor: "pointer"}}>Follow</span>
+            {user.username} {}
+            {state && state.user && user.followers && user.followers.includes(state.user._id) ? (
+            <span onClick={() => handleUnfollow(user)} className = "text-primary" style = {{cursor: "pointer"}}>
+              Unfollow
+            </span>
+            ) : (
+            <span onClick={() => handleFollow(user)} className = "text-primary" style = {{cursor: "pointer"}}>
+              Follow
+            </span>
+            )}
           </div>
           }
           />
