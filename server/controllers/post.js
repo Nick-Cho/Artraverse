@@ -93,12 +93,16 @@ export const newsFeed = async (req,res) =>{
     const user = await User.findById(req.user._id);
     let following = user.following;
     following.push(req.user._id);
-
+    //pagination configuration
+    const currentPage = req.params.page || 1;
+    const perPage = 3; //posts per page
+    
     const posts = await Post.find({postedBy: {$in: following}})
+    .skip((currentPage -1) * perPage) //skips the posts that are on the previous pages
     .populate("postedBy")
     .populate('comments.postedBy')
     .sort({createdAt: -1})
-    .limit(9);
+    .limit(perPage);
     res.status(200).send(posts);
   } catch(err){
     console.log()

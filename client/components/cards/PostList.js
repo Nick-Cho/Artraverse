@@ -9,7 +9,7 @@ import PostImage from '../images/PostImage'
 import {HeartOutlined, HeartFilled, CommentOutlined, EditOutlined, DeleteOutlined} from "@ant-design/icons"
 import {imageSource} from "../../functions"
 import Post from '../../components/cards/Post'
-function PostList({posts, handleDelete, handleLike, handleUnlike, handleComment}) {
+function PostList({posts, handleDelete, handleLike, handleUnlike, handleComment, removeComment}) {
   const [state, setState] = useContext(UserContext);
   const router = useRouter();
   
@@ -22,6 +22,7 @@ function PostList({posts, handleDelete, handleLike, handleUnlike, handleComment}
        handleLike={handleLike} 
        handleUnlike={handleUnlike} 
        handleComment={handleComment}
+       removeComment={removeComment}
        commentsCount={2}
        />
       ))

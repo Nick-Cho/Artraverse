@@ -29,7 +29,7 @@ router.get('/user-post/:_id', requireSignIn, userPost)
 router.put('/update-post/:_id', requireSignIn, canEditPost, updatePost)
 router.delete('/delete-post/:_id', requireSignIn, canEditPost, deletePost)
 
-router.get('/news-feed', requireSignIn, newsFeed);
+router.get('/news-feed/:page', requireSignIn, newsFeed);
 
 router.put('/liked-post', requireSignIn, likePost);
 router.put('/unliked-post', requireSignIn, unlikePost)

@@ -8,8 +8,9 @@ import { toast } from "react-toastify";
 import PostList from '../../components/cards/PostList'
 import SuggestedFollowers from "../../components/cards/SuggestedFollowers"
 import Link from "next/link";
-import {Modal} from "antd";
+import {Modal, Pagination} from "antd";
 import CommentForm from "../../components/forms/CommentForm"
+
 const Home = () => {
   const router = useRouter();
   const [state, setState] = useContext(UserContext);
@@ -27,25 +28,27 @@ const Home = () => {
   const [showComment, setShowComment] = useState(false)
   //indicates which post to pop comment textbox under
   const [currentPost, setCurrentPost] = useState({});  
-
+  //total posts received from the database
   const [totalPosts, setTotalPosts] = useState(0);
-
+  //tracks the page of posts that the user is currently on
+  const [page, setPage] = useState(1);
   useEffect(()=>{
-    if (state){
+    if (state && state.token){
       //console.log("useeffect state: ", state);
       // setNumFollowing(state.user.following);
       newsFeed();
       findPeople();
     }
-  }, [state]);
+  }, [state, page]);
 
   useEffect(()=>{
     try{
-      axios.get('/total-posts').then((response)=> console.log("callback from total posts",response));
+      const {data} = axios.get('/total-posts');
+      setPosts(data);
     } catch (err){
       console.log(err);
     }
-  })
+  },[])
 
   const handleLike = async (_id) => {
     // console.log("liked post: ", _id);
@@ -122,6 +125,7 @@ const Home = () => {
       toast.error(response.data.message);
     }
     else{
+      setPage(1); //takes user back to first page to see their new post
       newsFeed();
       toast.success('Post created');
       setContent("");
@@ -147,7 +151,7 @@ const Home = () => {
 
   const newsFeed = async () => {
     try{
-      const response = await axios.get('/news-feed');
+      const response = await axios.get(`/news-feed/${page}`);
       //console.log(response);
       setPosts(response.data);
       
@@ -195,9 +199,20 @@ const Home = () => {
     }
   }
 
-  const removeComment = async () => {
+  const removeComment = async(postId, comment) => {
+    // console.log(postId, comment);
+    let answer = window.confirm("Are you sure you want to delete this comment?")
     
+    try {
+      const response = await axios.put("/remove-comment", {postId,comment})
+      console.log("Comment removed data: ", response);
+      newsFeed(); //refreshing post to show comment is removed
+    } 
+    catch(err){
+      console.log(err);
+    }
   }
+
   return(
     <UserRoute>
       <div className = "container-fluid">
@@ -226,9 +241,16 @@ const Home = () => {
           handleLike={handleLike} 
           handleUnlike={handleUnlike}
           handleComment={handleComment}
+          removeComment = {removeComment}
           />
         </div>
 
+        <Pagination  
+        current={page} 
+        total = {(totalPosts/3)*10} //shows 3 posts on each page
+        onChange={(value)=>{setPage(value)}}
+        />
+        
         <div className = "col-md-4">
           {state && state.user && state.user.following &&
           <Link href = {`/user/following`}>
