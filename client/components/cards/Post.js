@@ -101,7 +101,7 @@ function Post({
           style = {{maxHeight: "150px", overflow:"scroll"}}    
           >
             {post.comments.length > 0 && post.comments.slice(0,commentsCount).map((comment)=>(
-              <li className = "list-group-item d-flex justify-content-between align-items-center">
+              <li key = {comment._id} className = "list-group-item d-flex justify-content-between align-items-center">
                 <div className = "ms-2 me-auto">
                   <div className = "font-weight-bold">
                     <Avatar size = {20} className ="mb-1 mr-3" 

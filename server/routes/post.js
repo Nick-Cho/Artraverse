@@ -18,6 +18,7 @@ import {
   unlikePost,
   addComment,
   removeComment,
+  totalPosts
 } from '../controllers/post.js'
 
 router.post('/create-post',requireSignIn, createPost);
@@ -34,5 +35,8 @@ router.put('/liked-post', requireSignIn, likePost);
 router.put('/unliked-post', requireSignIn, unlikePost)
 
 router.put('/add-comment', requireSignIn, addComment);
-router.put('/remove-comment', requireSignIn, removeComment)
+router.put('/remove-comment', requireSignIn, removeComment);
+
+router.get('/total-posts', totalPosts);
+
 module.exports = router;
