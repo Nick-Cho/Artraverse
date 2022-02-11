@@ -16,6 +16,7 @@ function PostList({posts, handleDelete, handleLike, handleUnlike, handleComment}
   return(
     <> {posts && posts.map((post) => (
        <Post 
+       
        post={post} 
        handleDelete={handleDelete} 
        handleLike={handleLike} 

@@ -28,6 +28,8 @@ const Home = () => {
   //indicates which post to pop comment textbox under
   const [currentPost, setCurrentPost] = useState({});  
 
+  const [totalPosts, setTotalPosts] = useState(0);
+
   useEffect(()=>{
     if (state){
       //console.log("useeffect state: ", state);
@@ -35,7 +37,15 @@ const Home = () => {
       newsFeed();
       findPeople();
     }
-  }, [state])
+  }, [state]);
+
+  useEffect(()=>{
+    try{
+      axios.get('/total-posts').then((response)=> console.log("callback from total posts",response));
+    } catch (err){
+      console.log(err);
+    }
+  })
 
   const handleLike = async (_id) => {
     // console.log("liked post: ", _id);
