@@ -90,7 +90,7 @@ const Home = () => {
     //console.log("handle follow user: ", user);
     try{
       const response = {};
-      const res = await axios.put('/user-follow', {_id: user._id})
+      await axios.put('/user-follow', {_id: user._id})
       .then((r) => {
           response = r;
         });
@@ -255,7 +255,7 @@ const Home = () => {
         
         
         <div className = "col-md-4">
-          <Search/>
+          <Search handleFollow ={handleFollow}/>
           <br/>
           {state && state.user && state.user.following &&
           <Link href = {`/user/following`}>

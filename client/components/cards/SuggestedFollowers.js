@@ -1,5 +1,5 @@
-import {useEffect, useContext} from "react";
-import {Avatar, List, Card} from "antd";
+import { useContext} from "react";
+import {Avatar, List} from "antd";
 import moment from "moment";
 import {useRouter} from "next/router";
 import {UserContext} from '../../context/index';

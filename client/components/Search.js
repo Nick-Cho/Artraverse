@@ -1,16 +1,22 @@
 import {useState,useContext} from "react";
 import {UserContext} from "../context/index";
 import axios from 'axios';
-
-function Search() {
+import SuggestedFollowers from "../components/cards/SuggestedFollowers";
+function Search({handleFollow}) {
   const [state,setState] = useContext(UserContext);
   const [query, setQuery] = useState("") //tracks the search bar user input
+  const [result, setResult] = useState([]);
   const searchUser = e =>{
     e.preventDefault();
-    console.log(`Find ${query} from database`)
+    //console.log(`Find ${query} from database`)
     try{
-      const {data} = axios.get(`/search-user/${query}`);
-      console.log("search user response: ", data);
+      const response = {};
+     axios.get(`/search-user/${query}`).then((r)=>{
+      response = r;  
+      //console.log("search user response: ", response);
+      setResult(response.data);
+      // console.log("Result: ", result)
+       });
     } catch (err) {
       console.log(err);
     }
@@ -23,7 +29,10 @@ function Search() {
       >
         <div className = "col-8">
           <input 
-          onChange= {(e)=>setQuery(e.target.value)} 
+          onChange= {(e)=>{
+            setQuery(e.target.value);
+            setResult([]);
+          }} 
           value = {query}
           className = "form-control"
           placeHolder="Search"
@@ -39,6 +48,14 @@ function Search() {
           </button>
         </div>
       </form>
+      
+      {result.length != 0 &&
+      <SuggestedFollowers 
+      people = {result} 
+      handleFollow={handleFollow}
+      />
+      }
+    
     </>
   )
 }
