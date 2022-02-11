@@ -74,15 +74,16 @@ const Home = () => {
 
   const findPeople = async () => {
     const response = await axios.get("/find-people");
-    //console.log("response from find people endpoint", response);
-    if (response ){
-      if (response.status === 200){
+    
+    
+      if (response && response.status === 200){
+        console.log("response from find people endpoint", response);
         setPeople(response.data);
       }
       else if (response.status === 400){
         toast.error(response.data.message)
       }
-    }
+    
     
   }
 

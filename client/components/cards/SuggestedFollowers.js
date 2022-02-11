@@ -4,6 +4,7 @@ import moment from "moment";
 import {useRouter} from "next/router";
 import {UserContext} from '../../context/index';
 import {imageSource} from '../../functions'
+import Link from "next/link"
 
 function SuggestedFollowers({people, handleFollow, handleUnfollow}) {
   const [state] = useContext(UserContext);
@@ -17,7 +18,11 @@ function SuggestedFollowers({people, handleFollow, handleUnfollow}) {
           avatar = {<Avatar src ={imageSource(user)}/>}
           title = {
           <div className = "d-flex justify-content-between">
-            {user.username} {}
+            <Link href={`/user/${user.username}`}>
+              <a >
+                {user.username}
+              </a>
+            </Link>
             {state && state.user && user.followers && user.followers.includes(state.user._id) ? (
             <span onClick={() => handleUnfollow(user)} className = "text-primary" style = {{cursor: "pointer"}}>
               Unfollow
