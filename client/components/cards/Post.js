@@ -15,7 +15,8 @@ function Post({
   handleUnlike, 
   handleComment,
   commentsCount, 
-  removeComment
+  removeComment,
+  home //tracks if posts component is being rendered in home page
 }) {
   const [state, setState] = useContext(UserContext);
   const router = useRouter();
@@ -37,7 +38,7 @@ function Post({
         </div>
 
         <div className = "card-footer">
-          <PostImage url = {post.image.url}/>
+          <PostImage home={home} url = {post.image.url}/>
           <div className = "d-flex pt-2">
             
             {state && state.user && post.likes && post.likes.includes(state.user._id) ? 

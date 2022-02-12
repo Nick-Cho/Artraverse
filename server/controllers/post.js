@@ -176,3 +176,16 @@ export const totalPosts = async (req, res) => {
     console.log(err);
   }
 }
+
+export const posts = async(req,res) => {
+  try{
+    const posts = await Post.find()
+    .populate('postedBy')
+    .populate('comments.postedBy')
+    .sort({createdAt: -1})
+    .limit(9);
+    res.status(200).send(posts);
+  } catch (err) {
+    console.log(err);
+  }
+}

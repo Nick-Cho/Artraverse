@@ -1,6 +1,6 @@
 import React from 'react';
 
-function PostImage({url}) {
+function PostImage({url, home}) {
   return (
     
     <div style = {{
@@ -8,7 +8,7 @@ function PostImage({url}) {
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center center",
         backgroundSize: "cover",
-        height: "900px",
+        height: home ? "500px" : "900px",
       }}>
 
     </div>
