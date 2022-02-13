@@ -19,7 +19,8 @@ import {
   addComment,
   removeComment,
   totalPosts,
-  posts
+  posts,
+  getPost
 } from '../controllers/post.js'
 
 router.post('/create-post',requireSignIn, createPost);
@@ -43,5 +44,6 @@ router.get('/total-posts', totalPosts);
 //route to get posts in the home page
 router.get('/posts', posts);
 
+router.get('/post/:_id', getPost)
 
 module.exports = router;

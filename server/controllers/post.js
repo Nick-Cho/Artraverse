@@ -189,3 +189,14 @@ export const posts = async(req,res) => {
     console.log(err);
   }
 }
+
+export const getPost = async (req,res) => {
+  try{
+    const post = await Post.findById(req.params._id)
+      .populate('postedBy')
+      .populate('comments.postedBy');
+    res.status(200).send(post);
+  } catch (err) {
+    console.log(err);
+  }
+}

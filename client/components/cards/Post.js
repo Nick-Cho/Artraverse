@@ -32,7 +32,7 @@ function Post({
             <span className="pt-2 ml-3" style = {{marginLeft: "0.5rem"}}>{moment(post.createdAt).fromNow()}</span>
           </div>
         </div>
-        
+         
         <div className = "card-body">
           {renderHTML(post.content)}
         </div>
@@ -45,8 +45,8 @@ function Post({
             (
               <>
                 <HeartFilled
-                onClick ={()=> handleUnlike(post._id)} 
-                style={{cursor: "pointer"}} 
+                onClick ={()=> !home ? handleUnlike(post._id):console.log() } 
+                style={{cursor: !home ? "pointer" : ""}} 
                 className = "text-danger pt-2 h5 px-2"
                 />
               </>
@@ -54,8 +54,8 @@ function Post({
             (
               <>
                 <HeartOutlined 
-                onClick ={()=> handleLike(post._id)} 
-                style={{cursor: "pointer"}} 
+                onClick ={()=> !home ?handleLike(post._id):console.log()} 
+                style={{cursor: !home? "pointer": ""}} 
                 className = "text-danger pt-2 h5 px-2"
                 />  
               </>
@@ -68,21 +68,30 @@ function Post({
             </div>
             
             <CommentOutlined 
-            onClick = {()=>handleComment(post)}
+            onClick = {()=> !home ? handleComment(post): console.log(post)}
             style={{cursor: "pointer"}} 
             className = "text-danger pt-2 h5 px-2"/>
             
+
             <div className = "pt-2 pl-4" style ={{marginRight: "2rem"}}>
+              {!home ? (
               <Link href = {`/post/${post._id}`}>
                 <a> 
                   {post.comments.length}
                   {post.comments.length == 1 ? " comment" : " comments"}
                 </a>
-              </Link>
+              </Link>)
+              : (
+              <>
+                {post.comments.length}
+                {post.comments.length == 1 ? " comment" : " comments"}
+              </>
+              )
+            }
               
               </div>
 
-            {state && state.user && state.user._id === post.postedBy._id && (
+            {state && state.user && state.user._id === post.postedBy._id && !home && (
               <>
                 <EditOutlined 
                 style={{cursor: "pointer"}}
@@ -113,7 +122,7 @@ function Post({
                 </div>
                 <span className = "badge rounded-pill text-muted">
                   {moment(comment.created).fromNow()}
-                  {state && state.user && state.user._id === comment.postedBy._id && (
+                  {state && state.user && state.user._id === comment.postedBy._id && !home && (
                     <div className = "mt-2 d-flex flex-row-reverse">
                       <DeleteOutlined 
                       onClick = {()=> removeComment(post._id, comment)}
