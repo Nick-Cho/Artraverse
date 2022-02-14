@@ -1,5 +1,5 @@
 import {UserContext} from '../context/index';
-import {useContext, useEffect} from "react";
+import {useContext, useEffect, useState} from "react";
 import axios from 'axios';
 import Post from "../components/cards/Post";
 import Head from "next/head";
@@ -11,13 +11,14 @@ const socket = io(process.env.NEXT_PUBLIC_SOCKETIO, {
 })
 const Home = ({posts}) =>{
   const [state,setState] = useContext(UserContext); //gives access to global state
+  const[newsFeed, setNewsFeed] = useState([]);
   
-  // useEffect(()=>{
-  //   //console.log("SOCKETIO on join", socket);
-  //   socket.on("receive-message", (newMessage)=> {
-  //     alert(newMessage);
-  //   })
-  // },[])
+  useEffect(()=>{
+    socket.on("new-post", (newPost)=> {
+      setNewsFeed([newPost, ...posts]);
+    })
+    console.log("new newsfeed: ", newsFeed);
+  },[socket])
   
   const head = () => {
     <Head>
@@ -39,18 +40,16 @@ const Home = ({posts}) =>{
     </Head>
   }
   
+  const collection = newsFeed.length > 0 ? newsFeed : posts;
+  console.log(newsFeed);
   return(
     <div className = 'container'>
-      {/* <button onClick={()=>{
-        socket.emit('send-message', "This is nick");
-      }}>
-        Send Message
-      </button> */}
+      
       <div className = "row">
         <div className = 'col'>
           <h1 className = 'display-1 text-center py-5'>Home page</h1>
           <div className = "row">
-            {posts.map((post)=>(
+            {collection.map((post)=>(
               <div key={post._id} className = "col-md-4">
                 <Link href={`/post/${post._id}`}>
                   <a>
