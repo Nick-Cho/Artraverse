@@ -18,8 +18,10 @@ export async function createPost(req,res) {
   try{
     const post = new Post({content, image, postedBy: {_id: req.user._id}});
     //console.log(post.postedBy);
-    post.save();
-    res.status(200).json(post);
+    await post.save();
+    const postWithUser = await Post.findById(post._id)
+    .populate("postedBy", "-password -secret");
+    res.status(200).json(postWithUser);
   } catch(err) {
     console.log(err);
     res.sendStatus(400);
@@ -170,6 +172,7 @@ export const removeComment = async(req,res) => {
 export const totalPosts = async (req, res) => {
   try{
     const total = await Post.count();
+    // console.log(total);
     res.json(total);
   }
   catch (err){

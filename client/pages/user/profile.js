@@ -11,6 +11,12 @@ import Link from "next/link";
 import {Modal, Pagination} from "antd";
 import CommentForm from "../../components/forms/CommentForm"
 import Search from "../../components/Search"
+import io from "socket.io-client";
+
+const socket = io(process.env.NEXT_PUBLIC_SOCKETIO, {
+  reconnection: true,
+})
+
 const Home = () => {
   const router = useRouter();
   const [state, setState] = useContext(UserContext);
@@ -43,8 +49,13 @@ const Home = () => {
 
   useEffect(()=>{
     try{
-      const {data} = axios.get('/total-posts');
-      setPosts(data);
+      axios.get('/total-posts').
+      then((response)=>{
+        //console.log(response);
+        setTotalPosts(response.data);
+      });
+      // setTotalPosts(data);
+      
     } catch (err){
       console.log(err);
     }
@@ -77,7 +88,7 @@ const Home = () => {
     
     
       if (response && response.status === 200){
-        console.log("response from find people endpoint", response);
+        //console.log("response from find people endpoint", response);
         setPeople(response.data);
       }
       else if (response.status === 400){
@@ -132,6 +143,8 @@ const Home = () => {
       toast.success('Post created');
       setContent("");
       setImage({});
+      //updating for other users
+      socket.emit("new-post", response.data);
     }
   }
 
@@ -154,7 +167,7 @@ const Home = () => {
   const newsFeed = async () => {
     try{
       const response = await axios.get(`/news-feed/${page}`);
-      //console.log(response);
+      //console.log(response.data);
       setPosts(response.data);
       
       

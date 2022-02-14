@@ -11,9 +11,14 @@ const socket = io(process.env.NEXT_PUBLIC_SOCKETIO, {
 })
 const Home = ({posts}) =>{
   const [state,setState] = useContext(UserContext); //gives access to global state
-  useEffect(()=>{
-    console.log("SOCKETIO on join", socket);
-  },[])
+  
+  // useEffect(()=>{
+  //   //console.log("SOCKETIO on join", socket);
+  //   socket.on("receive-message", (newMessage)=> {
+  //     alert(newMessage);
+  //   })
+  // },[])
+  
   const head = () => {
     <Head>
       <title>A social network for artists </title>
@@ -36,6 +41,11 @@ const Home = ({posts}) =>{
   
   return(
     <div className = 'container'>
+      {/* <button onClick={()=>{
+        socket.emit('send-message', "This is nick");
+      }}>
+        Send Message
+      </button> */}
       <div className = "row">
         <div className = 'col'>
           <h1 className = 'display-1 text-center py-5'>Home page</h1>

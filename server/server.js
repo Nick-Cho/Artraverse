@@ -39,9 +39,12 @@ readdirSync('./routes').map((r)=>{
 });
 
 // socketio
-io.on('connect', (socket)=>{
-  console.log('SOCKET.IO', socket.id);
-})
-
+ io.on('connect', (socket)=>{
+  // console.log('SOCKET.IO', socket.id);
+  socket.on('new-post', (newPost)=>{
+    //console.log("new post received:", newPost);
+    socket.broadcast.emit("new post:", newPost); //broadcast used so other users on the website will also get the alert
+  });
+});
 const port = process.env.PORT || 8000;
 http.listen(port, () => console.log(`Server running on port ${port}`));
