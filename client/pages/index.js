@@ -4,9 +4,16 @@ import axios from 'axios';
 import Post from "../components/cards/Post";
 import Head from "next/head";
 import Link from "next/link"
+import io from "socket.io-client";
+
+const socket = io(process.env.NEXT_PUBLIC_SOCKETIO, {
+  reconnection: true,
+})
 const Home = ({posts}) =>{
   const [state,setState] = useContext(UserContext); //gives access to global state
-  
+  useEffect(()=>{
+    console.log("SOCKETIO on join", socket);
+  },[])
   const head = () => {
     <Head>
       <title>A social network for artists </title>
@@ -34,7 +41,7 @@ const Home = ({posts}) =>{
           <h1 className = 'display-1 text-center py-5'>Home page</h1>
           <div className = "row">
             {posts.map((post)=>(
-              <div className = "col-md-4">
+              <div key={post._id} className = "col-md-4">
                 <Link href={`/post/${post._id}`}>
                   <a>
                     <Post key={post._id} post={post} home={true}/>

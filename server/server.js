@@ -7,7 +7,7 @@ const morgan = require("morgan");
 require("dotenv").config();
 
 const app = express();
-const http = require("http").createServer()
+const http = require("http").createServer(app);
 const io = require("socket.io")(http, {
   cors: {
     origin: [process.env.CLIENT_URL],
@@ -38,9 +38,10 @@ readdirSync('./routes').map((r)=>{
   app.use('/api', require(`./routes/${r}`))
 });
 
-//socketio
+// socketio
 io.on('connect', (socket)=>{
   console.log('SOCKET.IO', socket.id);
 })
+
 const port = process.env.PORT || 8000;
 http.listen(port, () => console.log(`Server running on port ${port}`));
