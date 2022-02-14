@@ -3,11 +3,18 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const {readdirSync} = require("fs")
 
-
 const morgan = require("morgan");
 require("dotenv").config();
 
 const app = express();
+const http = require("http").createServer()
+const io = require("socket.io")(http, {
+  cors: {
+    origin: [process.env.CLIENT_URL],
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-type"],
+  }
+});
 
 mongoose.connect(process.env.DATABASE,{
   useNewUrlParser: true,
@@ -31,5 +38,9 @@ readdirSync('./routes').map((r)=>{
   app.use('/api', require(`./routes/${r}`))
 });
 
+//socketio
+io.on('connect', (socket)=>{
+  console.log('SOCKET.IO', socket.id);
+})
 const port = process.env.PORT || 8000;
-app.listen(port, () => console.log(`Server running on port ${port}`));
+http.listen(port, () => console.log(`Server running on port ${port}`));
