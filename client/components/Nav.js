@@ -25,7 +25,7 @@ function Nav () {
   }
 
   return (
-  <nav className="nav bg-dark d-flex justify-content-left p-3">  
+  <nav className="nav d-flex justify-content-left p-3 bg-dark" style = {{backgroundColor: "black"}}>  
       <Link href = "/" >
         <a className ={`nav-link text-light ${currPage === "/" && "active"}`}>
           <Avatar src = "/images/logo.png" className="mr-2"/> Home

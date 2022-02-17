@@ -200,7 +200,7 @@ export const userFollow = async(req,res) =>{
     }, 
     {new: true,} //sends updated arguemnt
     ).select("-password -secret");
-    console.log(user);
+    //console.log(user);
     return res.send(user);  
   } catch (err) {
     console.log(err);

@@ -6,21 +6,22 @@ import 'react-quill/dist/quill.snow.css'; // ES6
 
 function PostForm({content, setContent, postSubmit, handleImage, loading, image}) {
   return( 
-  <div className = "card">
+  <div className = "card bg-dark  ">
     <div className = "card-body pb-3">
       <form className = "form-group" onSubmit = {postSubmit}>
         <ReactQuill
           theme = "snow"
           value = {content}
           onChange = {(e) => setContent(e)}
-          className = "form-control"
+          className = "form-control text-light"
+          style = {{backgroundColor: "#202020", color: "white"}}
           placeholder = ""
         />
       </form>
     </div>
    
-    <div className = "card-footer d-flex justify-content-between text-muted">
-      <button onClick = {postSubmit} className = "btn btn-primary btn-sm mt-1">Post</button>
+    <div className = "card-footer d-flex justify-content-between text-muted ">
+      <button onClick = {postSubmit} className = "btn btn-dark btn-md mt-1" style = {{border: "2px solid white"}}>Post</button>
       
       <label>
         {image && image.url ? (
@@ -29,7 +30,7 @@ function PostForm({content, setContent, postSubmit, handleImage, loading, image}
           loading ? (
           <LoadingOutlined className = "mt-2"/>
           ):
-          (<CameraOutlined className = "mt-2" style = {{cursor: "pointer"}}/>)
+          (<CameraOutlined className = "mt-2" style = {{cursor: "pointer" , color: "white"}}/>)
         }
         <input onChange = {handleImage} type = "file" accept = "images/*" hidden style = {{cursor: "pointer"}}/>
       </label>

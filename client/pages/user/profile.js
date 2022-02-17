@@ -229,67 +229,72 @@ const Home = () => {
   }
 
   return(
-    <UserRoute>
-      <div className = "container-fluid">
-        <div className = "row py-5 ">
-          <div className = "col text-center">
-            <h1 className = "display-1 text-center">Profile Page</h1>
+    <div style = {{backgroundColor: "black"}}>     
+      <UserRoute>
+        <div className = "container-fluid">
+          <div className = "row py-5 ">
+            <div className = "col text-center">
+              <h1 className = "display-1 text-center text-light">Profile Page</h1>
+            </div>
           </div>
         </div>
-      </div>
-      
-      <div className = "row py-3">
-        <div className = "col-md-8">
-          <CreatePost 
-          content = {content} 
-          setContent = {setContent} 
-          postSubmit = {postSubmit} 
-          handleImage = {handleImage}
-          loading = {loading}
-          image={image}/>
-          
-          <br/>
-
-          <PostList 
-          posts = {posts} 
-          handleDelete={handleDelete} 
-          handleLike={handleLike} 
-          handleUnlike={handleUnlike}
-          handleComment={handleComment}
-          removeComment = {removeComment}
-          />
-
-          <Pagination  
-          current={page} 
-          total = {(totalPosts/3)*10} //shows 3 posts on each page
-          onChange={(value)=>{setPage(value)}}
-          className = "pb-5"
-          />
-        </div>
-
         
-        
-        <div className = "col-md-4">
-          <Search/>
-          <br/>
-          {state && state.user && state.user.following &&
-          <Link href = {`/user/following`}>
-            <a className = "h6">{state.user.following.length} Following</a>
-          </Link>
+        <div className = "row py-3 ">
+          <div className = "col-md-8" >
+            <CreatePost 
+            content = {content} 
+            setContent = {setContent} 
+            postSubmit = {postSubmit} 
+            handleImage = {handleImage}
+            loading = {loading}
+            image={image}/>
+            
+            <br/>
+
+            <PostList 
+            posts = {posts} 
+            handleDelete={handleDelete} 
+            handleLike={handleLike} 
+            handleUnlike={handleUnlike}
+            handleComment={handleComment}
+            removeComment = {removeComment}
+            />
+            
+            <div className = "d-flex justify-content-center">
+              <Pagination  
+              current={page} 
+              total = {(totalPosts/3)*10} //shows 3 posts on each page
+              onChange={(value)=>{setPage(value)}}
+              className = "pb-5"
+              />
+            </div>
+            
+          </div>
+
           
-          }
-          <SuggestedFollowers handleFollow={handleFollow} people={people}/>
-        </div>
-        <Modal 
-        visible = {showComment} 
-        onCancel={()=>setShowComment(false)} 
-        title = "Comment"
-        footer={null}
-        >
-        <CommentForm addComment={addComment} comment={comment} setComment={setComment}/>
-        </Modal>  
-      </div>  
-    </UserRoute>
+          
+          <div className = "col-md-4">
+            <Search/>
+            <br/>
+            {state && state.user && state.user.following &&
+            <Link href = {`/user/following`}>
+              <a className = "h6">{state.user.following.length} Following</a>
+            </Link>
+            
+            }
+            <SuggestedFollowers handleFollow={handleFollow} people={people}/>
+          </div>
+          <Modal 
+          visible = {showComment} 
+          onCancel={()=>setShowComment(false)} 
+          title = "Comment"
+          footer={null}
+          >
+          <CommentForm addComment={addComment} comment={comment} setComment={setComment}/>
+          </Modal>  
+        </div>  
+      </UserRoute>
+    </div>
   );
 };  
 export default Home;
