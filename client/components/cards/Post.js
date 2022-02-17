@@ -16,24 +16,25 @@ function Post({
   handleComment,
   commentsCount, 
   removeComment,
-  home //tracks if posts component is being rendered in home page
+  home, //tracks if posts component is being rendered in home page
+  singlePost, //tracks if the post is in the single post view page
 }) {
   const [state, setState] = useContext(UserContext);
   const router = useRouter();
   
   return(
     <> 
-      {post && post.postedBy && <div key = {post._id} className = "card mb-5">
+      {post && post.postedBy && <div key = {post._id} className = "card mb-5 bg-dark">
         <div className = "card-header">
           <div>
             {/* <Avatar size = {40} classsName="mb-2">{post.postedBy.first_name[0]}</Avatar>{" "}        */}
             <Avatar size = {40} classsName="mb-2" src={imageSource(post.postedBy)}/>
-            <span className="pt-2 ml-3" style = {{marginLeft: "0.5rem"}}>{post.postedBy.first_name}</span>
-            <span className="pt-2 ml-3" style = {{marginLeft: "0.5rem"}}>{moment(post.createdAt).fromNow()}</span>
+            <span className="pt-2 ml-3 text-light" style = {{marginLeft: "0.5rem"}}>{post.postedBy.first_name}</span>
+            <span className="pt-2 ml-3 text-light" style = {{marginLeft: "0.5rem"}}>{moment(post.createdAt).fromNow()}</span>
           </div>
         </div>
          
-        <div className = "card-body">
+        <div className = "card-body text-light">
           {renderHTML(post.content)}
         </div>
 
@@ -62,7 +63,7 @@ function Post({
             )}
 
             
-            <div className = "pt-2 pl-4" style ={{marginRight: "2rem"}}>
+            <div className = "pt-2 pl-4 text-light" style ={{marginRight: "2rem"}}>
               {post.likes.length} 
               {post.likes.length == 1 ? " like" : " likes"}
             </div>
@@ -76,16 +77,16 @@ function Post({
             <div className = "pt-2 pl-4" style ={{marginRight: "2rem"}}>
               {!home ? (
               <Link href = {`/post/${post._id}`}>
-                <a> 
+                <a className = "text-light"> 
                   {post.comments.length}
                   {post.comments.length == 1 ? " comment" : " comments"}
                 </a>
               </Link>)
               : (
-              <>
+              <div className = "text-light">
                 {post.comments.length}
                 {post.comments.length == 1 ? " comment" : " comments"}
-              </>
+              </div>
               )
             }
               
@@ -108,10 +109,11 @@ function Post({
         
           <ul 
           className = "list-group"
-          style = {{maxHeight: "150px", overflow:"scroll"}}    
+          style = {{maxHeight: "150px", overflow: singlePost ? "scroll": "", overflowX: "hidden"}}    
           >
             {post.comments.length > 0 && post.comments.slice(0,commentsCount).map((comment)=>(
               <li key = {comment._id} className = "list-group-item d-flex justify-content-between align-items-center">
+                
                 <div className = "ms-2 me-auto">
                   <div className = "font-weight-bold">
                     <Avatar size = {20} className ="mb-1 mr-3" 
@@ -120,6 +122,7 @@ function Post({
                   </div>
                   <div>{comment.text}</div>
                 </div>
+                
                 <span className = "badge rounded-pill text-muted">
                   {moment(comment.created).fromNow()}
                   {state && state.user && state.user._id === comment.postedBy._id && !home && (

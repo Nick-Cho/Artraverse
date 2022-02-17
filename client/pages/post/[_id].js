@@ -42,7 +42,7 @@ function PostComments() {
   return (
     <div>
       <div className = "row col-md-8 offset-md-2 ">
-        <Post post={post} commentsCount={100} removeComment = {removeComment}/>
+        <Post singlePost= {true} post={post} commentsCount={100} removeComment = {removeComment}/>
       </div>
       <Link href = "/user/profile">
         <a className = "d-flex justify-content-center p-5">

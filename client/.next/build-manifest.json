@@ -25,10 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/user/editProfile": [
+    "/post/[_id]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/user/editProfile.js"
+      "static/chunks/pages/post/[_id].js"
     ],
     "/user/profile": [
       "static/chunks/webpack.js",

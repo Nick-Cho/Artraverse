@@ -229,7 +229,7 @@ const Home = () => {
   }
 
   return(
-    <div style = {{backgroundColor: "black"}}>     
+    <div style = {{backgroundColor: "black", overflow:"hidden"}}>     
       <UserRoute>
         <div className = "container-fluid">
           <div className = "row py-5 ">

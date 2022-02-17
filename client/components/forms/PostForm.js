@@ -25,7 +25,7 @@ function PostForm({content, setContent, postSubmit, handleImage, loading, image}
       
       <label>
         {image && image.url ? (
-          <Avatar size = {30} src = {image.url} className = "mt-1" style = {{cursor: "pointer"}}/>
+          <Avatar size = {30} src = {image.url} className = "mt-1"/>
         ):
           loading ? (
           <LoadingOutlined className = "mt-2"/>
