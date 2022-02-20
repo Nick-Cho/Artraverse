@@ -7,7 +7,6 @@ import Link from 'next/link';
 
 import AuthForm from '../components/forms/AuthForm.js'
 import { UserContext } from "../context/index.js";
-import { Router } from "next/router";
 const Register = () => {
   const [fname, setFname] = useState(''); 
   const [lname, setLname] = useState(''); 
@@ -51,10 +50,10 @@ const Register = () => {
     router.push("/")
   }
   return (
-    <div className = 'container-fluid'>
-      <div className ="row py-5 bg-secondary text-light">
+    <div className = 'container-fluid min-vh-100' style = {{backgroundColor:"black"}}>
+      <div className ="row py-5" style = {{backgroundColor:"black"}}>
         <div className = 'col text-center'>
-          <h1>Create your Account</h1>
+          <h1 className = " text-light">Create your Account</h1>
         </div>
       </div>
 
@@ -93,7 +92,7 @@ const Register = () => {
 
       <div className = "row">
         <div className = "col">
-          <p className = "text-center">Already registered?{" "}
+          <p className = "text-center text-light">Already registered?{" "}
             <Link href = "/login">
               <a >Login</a>
             </Link>
