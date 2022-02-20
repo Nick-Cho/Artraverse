@@ -2,9 +2,8 @@ import {useContext, useEffect, useState} from "react";
 import Link from 'next/link';
 import {UserContext} from '../context/index';
 import {useRouter} from "next/router";
-import React from 'react';
 import {Avatar} from "antd"
-
+import {imageSource} from '../functions/index'
 function Nav () {
   const [state, setState] = useContext(UserContext);
   const [currPage, setCurrPage] = useState("");
@@ -25,46 +24,63 @@ function Nav () {
   }
 
   return (
-  <nav className="nav d-flex justify-content-left p-3 bg-dark" style = {{backgroundColor: "black"}}>  
+  <nav className="nav p-3 bg-dark" >  
+    
       <Link href = "/" >
-        <a className ={`nav-link text-light ${currPage === "/" && "active"}`}>
-          <Avatar src = "/images/logo.png" className="mr-2"/> Home
-          </a>
+        <a className ={`nav-link text-light`}>
+          Home
+        </a>
       </Link>
      
-      
-
       {state ? (
         <>
-          <div className="dropdown">
-            <button className="btn dropdown-toggle text-light" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              {state.user && state.user.first_name}
-            </button>
-            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li>
-                <Link href = "/user/profile" >
-                  <a className = {`nav-link dropdown-item  ${currPage === "/user/profile" && "active"}`}>Profile</a>
-                </Link>    
-              </li>
-              
-               <li>
-                <Link href = "/user/editProfile" >
-                  <a className = {`nav-link dropdown-item  ${currPage === "/user/editProfile" && "active"}`}>Update Profile</a>
-                </Link>    
-              </li>
-              <li><a onClick = {logout} className = "dropdown-item nav-link"> Logout </a></li>
-            </ul>
-          </div>
+          {/* <Link href = "/user/profile" >
+            <a className = {`nav-link text-light`}>Profile</a>
+          </Link>    */}
+         
+            <Link href = "/user/feed" >
+              <a className = {`nav-link text-light`}>Feed</a>
+            </Link>   
+            
+            
+            <div className="dropdown" aria-labelledby="dropdownMenuButton">
+              <button 
+              className="btn dropdown-toggle " 
+              type="button" id="dropdownMenuButton" 
+              data-bs-toggle="dropdown" 
+              aria-expanded="false"  
+              style = {{boxShadow: "none"}}>
+                {state.user != "" &&( 
+                  <Avatar src={imageSource(state.user)}/>
+                )}
+              </button>
+              <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                  <Link href = "/user/profile" >
+                    <a className = {`nav-link dropdown-item`}>Profile</a>
+                  </Link>    
+                </li>
+                
+                <li>
+                  <Link href = "/user/editProfile" >
+                    <a className = {`nav-link dropdown-item `}>Update Profile</a>
+                  </Link>    
+                </li>
+                <li><a onClick = {logout} className = "dropdown-item nav-link"> Logout </a></li>
+              </ul>
+            </div>
+          {/* <a onClick = {logout} className ="navbar-nav nav-link text-light"> Logout </a>  */}
+         
         </>
       )
       :
       (
       <>
         <Link href = "/login" >
-          <a className ={`nav-link text-light ${currPage === "/login" && "active"}`}>Login</a>
+          <a className ={`nav-link text-light`}>Login</a>
         </Link>    
         <Link href = "/register" >
-          <a className ={`nav-link text-light ${currPage === "/register" && "active"}`} style = {{borderRadius: '10px'}}>Register</a>
+          <a className ={`nav-link text-light`}>Register</a>
         </Link>
       </>
       )}
