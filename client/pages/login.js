@@ -45,10 +45,10 @@ const Login = () => {
   }
 
   return (
-    <div className = 'container-fluid'>
-      <div className ="row py-5 bg-secondary text-light">
-        <div className = 'col text-center'>
-          <h1>Login</h1>
+    <div className = 'container-fluid min-vh-100' style ={{backgroundColor:"black", }}>
+      <div className="row py-5">
+        <div className ='col text-center'>
+          <h1 className="text-light">Login</h1>
         </div>
       </div>
 
@@ -69,7 +69,7 @@ const Login = () => {
 
       <div className = "row">
         <div className = "col">
-          <p className = "text-center">Not yet registered?{" "}
+          <p className = "text-center text-light">Not yet registered?{" "}
             <Link href = "/register">
               <a>Register</a>
             </Link>
