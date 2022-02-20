@@ -59,8 +59,10 @@ export const postsByUser = async (req,res) => {
 export const userPost = async (req,res) => {
   try{
     const post = await Post.findById(req.params._id)
-    .populate("postedBy")
+    .populate('likes', "-password -secret")
+    .populate("postedBy", "-password -secret")
     .populate('comments.postedBy');
+    //console.log("updated post: ", post);
     res.status(200).send(post);
   } catch (error) {
     console.log(err);
@@ -74,7 +76,7 @@ export const updatePost = async (req,res) =>{
       new: true, //returns updated response
     })
     res.status(200).send(post);
-  }catch(err){
+  } catch(err){
     console.log(err);
   }
 }
@@ -82,6 +84,7 @@ export const updatePost = async (req,res) =>{
 export const deletePost = async (req,res) =>{
   try{
     const post = await Post.findByIdAndDelete(req.params._id,);
+    //console.log("Post Id from Delete: ", req.params._id);
     //removing image from cloudinary database
     const image = await cloudinary.uploader.destroy(post.image.public_id);
     res.status(200).send({ok: true});
@@ -95,11 +98,30 @@ export const newsFeed = async (req,res) =>{
     const user = await User.findById(req.user._id);
     let following = user.following;
     following.push(req.user._id);
+    
     //pagination configuration
     const currentPage = req.params.page || 1;
     const perPage = 3; //posts per page
     
     const posts = await Post.find({postedBy: {$in: following}})
+    .skip((currentPage -1) * perPage) //skips the posts that are on the previous pages
+    .populate("postedBy")
+    .populate('comments.postedBy')
+    .sort({createdAt: -1})
+    .limit(perPage);
+    res.status(200).send(posts);
+  } catch(err){
+    console.log();
+  }
+}
+
+export const profileFeed = async (req,res) =>{
+  try{    
+    //pagination configuration
+    const currentPage = req.params.page || 1;
+    const perPage = 3; //posts per page
+    
+    const posts = await Post.find({postedBy: req.user._id})
     .skip((currentPage -1) * perPage) //skips the posts that are on the previous pages
     .populate("postedBy")
     .populate('comments.postedBy')
@@ -197,9 +219,12 @@ export const getPost = async (req,res) => {
   try{
     const post = await Post.findById(req.params._id)
       .populate('postedBy')
+      .populate('likes', '-password -secret')
       .populate('comments.postedBy');
     res.status(200).send(post);
   } catch (err) {
     console.log(err);
   }
 }
+
+
