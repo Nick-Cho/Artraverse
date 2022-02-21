@@ -45,7 +45,7 @@ export async function uploadImage(req,res){
 export const postsByUser = async (req,res) => {
   try{
     // const posts = await Post.find({postedBy: req.user._id})
-    const posts = await Post.find()
+    const posts = await Post.find({postedBy: req.user._id})
     .populate('postedBy')
     .sort({createdAt: -1}) // filters by newest post
     .limit(9); //limits to 9 posts
@@ -121,7 +121,7 @@ export const profileFeed = async (req,res) =>{
     const currentPage = req.params.page || 1;
     const perPage = 3; //posts per page
     
-    const posts = await Post.find({postedBy: req.user._id})
+    const posts = await Post.find({postedBy: req.params._id})
     .skip((currentPage -1) * perPage) //skips the posts that are on the previous pages
     .populate("postedBy")
     .populate('comments.postedBy')
@@ -202,6 +202,14 @@ export const totalPosts = async (req, res) => {
   }
 }
 
+export const userTotalPosts = async(req,res) =>{
+  try{
+    const total = await Post.find({postedBy: req.params._id}).count();
+    res.json(total);
+  } catch (err) {
+    console.log(err);
+  }
+}
 export const posts = async(req,res) => {
   try{
     const posts = await Post.find()
