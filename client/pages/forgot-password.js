@@ -52,10 +52,10 @@ const ForgotPassword = () => {
     router.push("/")
   }
   return (
-    <div className = 'container-fluid'>
-      <div className ="row py-5 bg-secondary text-light">
+    <div className = 'container-fluid min-vh-100' style={{backgroundColor: "black"}}>
+      <div className ="row py-5 text-light" style={{backgroundColor: "black"}}>
         <div className = 'col text-center'>
-          <h1>Forgot Password</h1>
+          <h1 className = "text-light">Forgot Password</h1>
         </div>
       </div>
 
