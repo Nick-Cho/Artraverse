@@ -54,19 +54,19 @@ function Nav () {
                   <Avatar src={imageSource(state.user)}/>
                 )}
               </button>
-              <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <ul className="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton1">
                 <li>
                   <Link href = "/user/profile" >
-                    <a className = {`nav-link dropdown-item`}>Profile</a>
+                    <a className = {`nav-link bg-transparent text-light dropdown-item`}>Profile</a>
                   </Link>    
                 </li>
                 
                 <li>
                   <Link href = "/user/editProfile" >
-                    <a className = {`nav-link dropdown-item `}>Update Profile</a>
+                    <a className = {`nav-link dropdown-item text-light bg-transparent`}>Update Profile</a>
                   </Link>    
                 </li>
-                <li><a onClick = {logout} className = "dropdown-item nav-link"> Logout </a></li>
+                <li><a onClick = {logout} className = "dropdown-item text-light bg-transparent nav-link"> Logout </a></li>
               </ul>
             </div>
           {/* <a onClick = {logout} className ="navbar-nav nav-link text-light"> Logout </a>  */}
