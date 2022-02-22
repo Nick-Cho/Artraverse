@@ -202,10 +202,10 @@ export const totalPosts = async (req, res) => {
   }
 }
 
-export const userTotalPosts = async(req,res) =>{
+export const userTotalPosts = async (req,res) =>{
   try{
     const total = await Post.find({postedBy: req.params._id}).count();
-    res.json(total);
+    res.json(total)
   } catch (err) {
     console.log(err);
   }
