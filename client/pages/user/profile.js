@@ -1,17 +1,21 @@
 import {useContext, useState, useEffect} from "react";
 import {UserContext} from "../../context/index.js";
-import UserRoute from "../../components/routes/UserRoute";
-import CreatePost from "../../components/forms/PostForm";
 import {useRouter} from "next/router";
+import Link from "next/link";
 import axios from 'axios';
+
+import io from "socket.io-client";
 import { toast } from "react-toastify";
+import {Modal, Pagination, Avatar} from "antd";
+
+import CreatePost from "../../components/forms/PostForm";
 import PostList from '../../components/cards/PostList'
 import SuggestedFollowers from "../../components/cards/SuggestedFollowers"
-import Link from "next/link";
-import {Modal, Pagination} from "antd";
+import UserRoute from "../../components/routes/UserRoute";
 import CommentForm from "../../components/forms/CommentForm"
 import Search from "../../components/Search"
-import io from "socket.io-client";
+import { imageSource } from "../../functions/index.js";
+
 
 const socket = io(process.env.NEXT_PUBLIC_SOCKETIO, {
   reconnection: true,
@@ -40,10 +44,14 @@ const Home = () => {
   const [page, setPage] = useState(1);
   useEffect(()=>{
     if (state && state.token){
-      //console.log("useeffect state: ", state);
+      console.log("useeffect state: ", state);
+      
       // setNumFollowing(state.user.following);
       newsFeed();
       findPeople();
+    }
+    if (!state.user){
+      router.push('/login');
     }
   }, [state, page]);
 
@@ -85,8 +93,6 @@ const Home = () => {
 
   const findPeople = async () => {
     const response = await axios.get("/find-people");
-    
-    
       if (response && response.status === 200){
         //console.log("response from find people endpoint", response);
         setPeople(response.data);
@@ -94,8 +100,6 @@ const Home = () => {
       else if (response.status === 400){
         toast.error(response.data.message)
       }
-    
-    
   }
 
   const handleFollow =  async (user) => {
@@ -115,7 +119,7 @@ const Home = () => {
       // update context
       
       setState({...state, user: response.data});
-      console.log("logging from handle follow. User: ", state.user);
+      //console.log("logging from handle follow. User: ", state.user);
       //update suggested follower state
       let filtered = people.filter((p)=>{p._id !== user._id});
       setPeople(filtered);
@@ -169,7 +173,6 @@ const Home = () => {
       const response = await axios.get(`/news-feed/${page}`);
       //console.log(response.data);
       setPosts(response.data);
-      
       
     } catch (err){
       console.log(err)
@@ -229,12 +232,24 @@ const Home = () => {
   }
 
   return(
-    <div style = {{backgroundColor: "black", overflow:"hidden"}}>     
+    <div style = {{backgroundColor: "black", overflow:"hidden", height:"auto"}} className= "container-fluid min-vh-100">     
       <UserRoute>
         <div className = "container-fluid">
           <div className = "row py-5 ">
             <div className = "col text-center">
-              <h1 className = "display-1 text-center text-light">Profile Page</h1>
+              <Avatar size={90} src={imageSource(state.user)}/>
+              <h1 className = "display-1 text-center text-light">{state.user.username}</h1>
+                {state.user && state.user.following && (
+                  <>
+                  <h4 className = "text-light" style ={{display: "inline"}}>{state.user.followers.length} Followers </h4>
+                  <Link href = {`/user/following`}>
+                    <a>
+                      <h4 className = "text-light" style ={{display: "inline"}}>{state.user.following.length} Following</h4>     
+                    </a>             
+                  </Link>
+                  </>
+                 )}
+                
             </div>
           </div>
         </div>
@@ -259,11 +274,13 @@ const Home = () => {
             handleComment={handleComment}
             removeComment = {removeComment}
             />
+
             
             <div className = "d-flex justify-content-center">
               <Pagination  
               current={page} 
-              total = {(totalPosts/3)*10} //shows 3 posts on each page
+              pageSize={3}
+              total = {(totalPosts)} //shows 3 posts on each page
               onChange={(value)=>{setPage(value)}}
               className = "pb-5"
               />
@@ -274,16 +291,18 @@ const Home = () => {
           
           
           <div className = "col-md-4">
-            <Search/>
-            <br/>
-            {state && state.user && state.user.following &&
-            <Link href = {`/user/following`}>
-              <a className = "h6">{state.user.following.length} Following</a>
-            </Link>
-            
-            }
+            <div className = "bg-dark pt-3 px-3">
+              <Search className = "bg-dark"/>
+              <br/>
+              {state && state.user && state.user.following &&
+              <Link href = {`/user/following`}>
+                <a className = "h6 text-light">{state.user.following.length} Following</a>
+              </Link>
+              }   
             <SuggestedFollowers handleFollow={handleFollow} people={people}/>
+            </div>
           </div>
+
           <Modal 
           visible = {showComment} 
           onCancel={()=>setShowComment(false)} 
