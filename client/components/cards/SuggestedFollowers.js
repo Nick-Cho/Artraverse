@@ -3,7 +3,7 @@ import {Avatar, List} from "antd";
 import moment from "moment";
 import {useRouter} from "next/router";
 import {UserContext} from '../../context/index';
-import {imageSource} from '../../functions'
+import {imageSource, UserOutlined} from '../../functions'
 import Link from "next/link"
 
 function SuggestedFollowers({people, handleFollow, handleUnfollow}) {
@@ -19,16 +19,16 @@ function SuggestedFollowers({people, handleFollow, handleUnfollow}) {
           title = {
           <div className = "d-flex justify-content-between">
             <Link href={`/user/${user.username}`}>
-              <a >
-                {user.username}
+              <a className = "text-light">
+                {user.first_name}
               </a>
             </Link>
             {state && state.user && user.followers && user.followers.includes(state.user._id) ? (
-            <span onClick={() => handleUnfollow(user)} className = "text-primary" style = {{cursor: "pointer"}}>
+            <span onClick={() => handleUnfollow(user)} style = {{cursor: "pointer", color: "#269bc6"}}>
               Unfollow
             </span>
             ) : (
-            <span onClick={() => handleFollow(user)} className = "text-primary" style = {{cursor: "pointer"}}>
+            <span onClick={() => handleFollow(user)} style = {{cursor: "pointer", color: "#269bc6"}}>
               Follow
             </span>
             )}
