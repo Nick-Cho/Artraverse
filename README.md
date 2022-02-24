@@ -11,7 +11,7 @@ Artraverse was built using the MERN stack and Next.js
 
 ### Live Updates 
 
-![Live Updates](https://github.com/Nick-Cho/social-network-app/blob/master/artraverse%20gif.gif) 
+![Live Updates](https://github.com/Nick-Cho/social-network-app/blob/master/artraverse.gif) 
 
 ### Login Page
 <img src="https://github.com/Nick-Cho/social-network-app/blob/master/login.png" width="600">
