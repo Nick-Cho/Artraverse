@@ -1,24 +1,39 @@
 # Artraverse
 Artraverse is a social media app that allows artists to more easily grow their platform through an intuitive interface. Artraverse was created out of my personal struggle to grow my art Instagram and Deviantart accounts due to lack of exposure. Through a home page that features the most recent posts made by its users, every artist has the oppurtunity to garner attention.
 
-Artraverse was built using the MERN stack and Next.js
+Artraverse was built using the MERN stack and Next.js. Frontend libraries used include: Socket.io, Axios, Bootstrap, Antd, and Toast
 ## Info
 * Made SEO friendly using Next.js to add "Head" data 
 * Created an ExpressJS __RESTful API__ to handle frontend requests
 * Live updates to the home page was facilitated through Socket.io to implement websockets.
-* Authentication was handled using Bcrypt. Bcrypt encrypted password information to be securely stored in a MongoDB 
+* Authentication was handled using Bcrypt. Bcrypt encrypts password information to be securely stored in a MongoDB 
 * Cloudinary API was used to facilitate image uploads.
 * Bootstrap implemented to make webpage responsive
 
 ### Live Updates 
-
 ![Live Updates](https://github.com/Nick-Cho/social-network-app/blob/master/artraverse.gif) 
-
-### Login Page
-<img src="https://github.com/Nick-Cho/social-network-app/blob/master/login.png" width="500">
-
-### Profile Page
-<img src="https://github.com/Nick-Cho/social-network-app/blob/master/profile.png" width="500">
+<table>
+  <tr>
+    <td>Login Page </td>
+    <td>Profile Page</td>
+    
+  </tr>
+  <tr>
+    <td><img src="https://github.com/Nick-Cho/social-network-app/blob/master/login.png" width="500"></td>
+    <td><img src="https://github.com/Nick-Cho/social-network-app/blob/master/profile.png" width="500"></td>
+    
+  </tr>
+</table>
+<table>
+  <tr>
+    <td>Home Page</td>
+    <td>Registration Page</td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/Nick-Cho/social-network-app/blob/master/home.png" width= "500"></td>
+    <td><img src="https://github.com/Nick-Cho/social-network-app/blob/master/register.png" width="500"></td>
+  </tr>
+</table>
 
 ## Code Documentation
 ### API Endpoints
