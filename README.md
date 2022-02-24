@@ -9,9 +9,14 @@ Artraverse was built using the MERN stack and Next.js
 * Cloudinary API was used to facilitate image uploads.
 * Bootstrap implemented to make webpage responsive
 
-Live Updates | Login Page 
-![Live Updates](https://github.com/Nick-Cho/social-network-app/blob/master/artraverse%20gif.gif) | ![Login Page](https://github.com/Nick-Cho/social-network-app/blob/master/login.png)
+### Live Updates 
 
-<img src="https://github.com/Nick-Cho/social-network-app/blob/master/profile.png" width="400">
+![Live Updates](https://github.com/Nick-Cho/social-network-app/blob/master/artraverse%20gif.gif) 
+
+### Login Page
+<img src="https://github.com/Nick-Cho/social-network-app/blob/master/login.png" width="600">
+
+### Profile Page
+<img src="https://github.com/Nick-Cho/social-network-app/blob/master/profile.png" width="600">
 
 ## File structure
