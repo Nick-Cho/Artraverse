@@ -4,7 +4,6 @@ import axios from 'axios';
 import { toast } from "react-toastify";
 import {Modal, Avatar} from "antd";
 import {LoadingOutlined, CameraOutlined} from "@ant-design/icons"
-import Link from 'next/link';
 
 import AuthForm from '../../components/forms/AuthForm.js'
 import { UserContext } from "../../context/index.js";
@@ -85,10 +84,10 @@ const ProfileUpdate = () => {
   }
 
   return (
-    <div className = 'container-fluid'>
-      <div className ="row py-5 bg-secondary text-light">
+    <div className = 'container-fluid' style={{backgroundColor:"black"}}>
+      <div className ="row py-5 ">
         <div className = 'col text-center'>
-          <h1>Profile</h1>
+          <h1 className = "text-light">Profile</h1>
         </div>
       </div>
 

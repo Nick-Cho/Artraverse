@@ -1,6 +1,5 @@
 import {useEffect, useState, useContext} from "react";
 import {Avatar, List, Card} from "antd";
-import moment from "moment";
 import {useRouter} from "next/router";
 import {UserContext} from '../../context/index';
 import axios from "axios";
@@ -57,25 +56,27 @@ function Following() {
     }
   }
   return (
-    <div className = "row col-md-6 offset-md-3">
-      <List itemLayout="horizontal" dataSource = {people} renderItem={(user) => (
-        <List.Item>
-          <List.Item.Meta 
-          avatar = {<Avatar src ={imageSource(user)}/>}
-          title = {
-          <div className = "d-flex justify-content-between">
-            {user.username} 
-            <span onClick={() => handleUnfollow(user)} className = "text-primary" style = {{cursor: "pointer"}}>Unfollow</span>
-          </div>
-          }
-          />
-        </List.Item>
-      )}/> 
-      <Link href ="/user/profile">
-        <a className = "d-flex justify-content-center pt-5">
-          <RollbackOutlined/>
-        </a>
-      </Link>
+    <div style={{backgroundColor:"black"}} className = "min-vh-100">
+      <div className = "row col-md-6 offset-md-3" style={{backgroundColor:"black"}}>
+        <List itemLayout="horizontal" dataSource = {people} renderItem={(user) => (
+          <List.Item>
+            <List.Item.Meta 
+            avatar = {<Avatar src ={imageSource(user)}/>}
+            title = {
+            <div className = "d-flex justify-content-between text-light">
+              {user.username} 
+              <span onClick={() => handleUnfollow(user)} className = "text-primary" style = {{cursor: "pointer"}}>Unfollow</span>
+            </div>
+            }
+            />
+          </List.Item>
+        )}/> 
+        <Link href ="/user/profile">
+          <a className = "d-flex justify-content-center pt-5">
+            <RollbackOutlined/>
+          </a>
+        </Link>
+      </div>
     </div>
   )
 }
