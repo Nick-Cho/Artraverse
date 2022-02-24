@@ -3,7 +3,8 @@ import axios from "axios";
 import {useEffect, useState} from 'react';
 import PostForm from "../../../components/forms/PostForm";
 import UserRoute from "../../../components/routes/UserRoute";
-import {toast, toasto} from "react-toastify";
+import {toast} from "react-toastify";
+import {Modal} from "antd";
 function EditPost() {
   const [post,setPost] = useState({});
   //state
@@ -29,7 +30,7 @@ function EditPost() {
       setImage(response.data.image);
     }
   } 
-
+    
   const postSubmit = async (e) => {
     e.preventDefault();
     
@@ -61,27 +62,30 @@ function EditPost() {
   }
 
   return (
-    <UserRoute>
-      <div className = "container-fluid">
-        <div className = "row py-5 ">
-          <div className = "col text-center">
-            <h1 className = "display-1 text-center">Profile Page</h1>
+    <div className = "min-vh-100" style={{backgroundColor: "black", overflowX: "hidden"}}>
+      <UserRoute>
+        <div className = "container-fluid" >
+          <div className = "row py-5 ">
+            <div className = "col text-center">
+              <h1 className = "display-1 text-light text-center">Edit Post</h1>
+            </div>
           </div>
         </div>
-      </div>
-      
-      <div className = "row py-3">
-        <div className = "col-md-8 offset-md-2">
-          <PostForm 
-          content = {content} 
-          setContent = {setContent} 
-          postSubmit = {postSubmit} 
-          handleImage = {handleImage}
-          loading = {loading}
-          image={image}/>
-        </div>
-      </div>  
-    </UserRoute>
+
+        <div className = "row py-3">
+          <div className = "col-md-8 offset-md-2">
+            <PostForm 
+            content = {content} 
+            
+            setContent = {setContent} 
+            postSubmit = {postSubmit} 
+            handleImage = {handleImage}
+            loading = {loading}
+            image={image}/>
+          </div>
+        </div>  
+      </UserRoute>
+    </div>
   )
 }
 
