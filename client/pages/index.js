@@ -1,5 +1,5 @@
-import {UserContext} from '../context/index';
-import {useContext, useEffect, useState} from "react";
+
+import { useEffect, useState} from "react";
 import axios from 'axios';
 import Post from "../components/cards/Post";
 import Head from "next/head";
@@ -10,7 +10,7 @@ const socket = io(process.env.NEXT_PUBLIC_SOCKETIO, {
   reconnection: true,
 })
 const Home = ({posts}) =>{
-  const [state,setState] = useContext(UserContext); //gives access to global state
+  
   const[newsFeed, setNewsFeed] = useState([]);
   
   useEffect(()=>{
@@ -33,7 +33,7 @@ const Home = ({posts}) =>{
       />
       <meta property="og:type" content="website"/>
       <meta property="og:site_name" content="Artraverse"/>
-      <meta property="og:url" content="http://artaverse.com"/>
+      <meta property="og:url" content="http://artraverse.com"/>
       <meta 
       property="og:image:secure_url" 
       content="http://artraverse.com/images/logo.png"/>
@@ -43,17 +43,17 @@ const Home = ({posts}) =>{
   const collection = newsFeed.length > 0 ? newsFeed : posts;
   console.log(newsFeed);
   return(
-    <div className = 'container'>
+    <div className = 'container-fluid' style = {{backgroundColor: "black"}}>
       
-      <div className = "row">
+      <div className = "row" style = {{backgroundColor: "black"}}>
         <div className = 'col'>
-          <h1 className = 'display-1 text-center py-5'>Home page</h1>
+          <h1 className = 'display-1 text-center py-5 text-light'>Gallery</h1>
           <div className = "row">
             {collection.map((post)=>(
               <div key={post._id} className = "col-md-4">
                 <Link href={`/post/${post._id}`}>
                   <a>
-                    <Post key={post._id} post={post} home={true}/>
+                    <Post commentsCount = {2}singlePost = {false} key={post._id} post={post} home={true}/>
                   </a>
                 </Link>
               </div>
