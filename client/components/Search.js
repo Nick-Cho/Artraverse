@@ -83,14 +83,16 @@ function Search() {
             setQuery(e.target.value);
           }} 
           value = {query}
-          className = "form-control"
+          className = "form-control bg-dark text-light"
           placeHolder="Search"
+          style = {{boxShadow: "none", borderColor: "white"}}
           />
         </div> 
         
         <div className = "col-4">
           <button 
-          className = "btn btn-outline-primary col-12" 
+          className = "btn col-12 text-light" 
+          style = {{outline: "2px solid white"}}
           type = "submit"
           >
             Submit

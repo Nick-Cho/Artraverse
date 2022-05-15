@@ -21,7 +21,8 @@ import {
   totalPosts,
   posts,
   getPost,
-  profileFeed
+  profileFeed,
+  userTotalPosts
 } from '../controllers/post.js'
 
 router.post('/create-post',requireSignIn, createPost);
@@ -36,7 +37,7 @@ router.put('/update-post/:_id', requireSignIn, canEditPost, updatePost)
 router.delete('/delete-post/:_id', requireSignIn, canEditPost, deletePost)
 
 router.get('/news-feed/:page', requireSignIn, newsFeed);
-router.get('/profile-feed/:page', requireSignIn, profileFeed);
+router.get('/profile-feed/:page/:_id', requireSignIn, profileFeed); //gets updated posts by one user
 
 router.put('/liked-post', requireSignIn, likePost);
 router.put('/unliked-post', requireSignIn, unlikePost)
@@ -44,8 +45,8 @@ router.put('/unliked-post', requireSignIn, unlikePost)
 router.put('/add-comment', requireSignIn, addComment);
 router.put('/remove-comment', requireSignIn, removeComment);
 
-router.get('/total-posts', totalPosts);
-
+router.get('/total-posts', totalPosts); //gets total number of posts
+router.get('/user-total-posts/:_id', userTotalPosts);
 //route to get all available posts in the home page
 router.get('/posts', posts);
 

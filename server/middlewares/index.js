@@ -10,7 +10,7 @@ export const canEditPost = async (req,res, next) =>{
   //next is a callback function
   try{
     const post = await Post.findById(req.params._id);
-    console.log("post received from canEditPost middleware: ", post);
+    //console.log("post received from canEditPost middleware: ", post);
     if (req.user._id != post.postedBy){
       return res.status(400).send("Unauthorized");
     }

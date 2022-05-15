@@ -3,6 +3,6 @@ export const imageSource = (user) =>{
       return user.image.url;
     }
     else{
-      return "/images/default.jpeg"
+      return "/images/default.jpg"
     }
   }

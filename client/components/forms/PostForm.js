@@ -13,9 +13,9 @@ function PostForm({content, setContent, postSubmit, handleImage, loading, image}
           theme = "snow"
           value = {content}
           onChange = {(e) => setContent(e)}
-          className = "form-control text-light"
+          className = "form-control text-light react-quill"
           style = {{backgroundColor: "#202020", color: "white"}}
-          placeholder = ""
+          placeholder = "Write a caption"
         />
       </form>
     </div>

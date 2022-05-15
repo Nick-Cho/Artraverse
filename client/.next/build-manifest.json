@@ -25,10 +25,20 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/post/[_id]": [
+    "/login": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/post/[_id].js"
+      "static/chunks/pages/login.js"
+    ],
+    "/user/[username]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/user/[username].js"
+    ],
+    "/user/feed": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/user/feed.js"
     ],
     "/user/profile": [
       "static/chunks/webpack.js",

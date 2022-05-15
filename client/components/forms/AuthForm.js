@@ -104,10 +104,10 @@ return(
      (
      <>
     <div className = 'form group p-2'>
-      <select className = "form-control bg-dark text-light" style = {{borderColor:"gray"}}>
-        <option>What is your favourite color?</option>
-        <option>What is the name of your first pet?</option>
-        <option>What is your mother's maiden name?</option>
+      <select className = "form-control bg-dark text-light login-select" style = {{borderColor:"gray"}}>
+        <option className = "login-option">What is your favourite color?</option>
+        <option className = "login-option">What is the name of your first pet?</option>
+        <option className = "login-option">What is your mother's maiden name?</option>
       </select>
 
       <small className ='form-text text-muted'>

@@ -31,7 +31,7 @@ const UserProvider = ({children}) => {
     let res = error.response;
     //console.log(error);
     //console.log("axios interceptor error", error);
-    if (res.status === 401 && !res.config.__isRetryRequest){
+    if (res && res.status && res.status === 401 && !res.config.__isRetryRequest){
       setState({user: {}, token: ""});
       window.localStorage.removeItem("auth");
       router.push("/login");

@@ -24,10 +24,11 @@ function Post({
   
   return(
     <> 
+    
       {post && post.postedBy && <div key = {post._id} className = "card mb-5 bg-dark">
         <div className = "card-header">
           <div>
-            {/* <Avatar size = {40} classsName="mb-2">{post.postedBy.first_name[0]}</Avatar>{" "}        */}
+            {/* <Avatar size = {40} classsName="mb-2">{post.postedBy.first_name[0]}</Avatar>{" "}*/}
             <Avatar size = {40} classsName="mb-2" src={imageSource(post.postedBy)}/>
             <span className="pt-2 ml-3 text-light" style = {{marginLeft: "0.5rem"}}>{post.postedBy.first_name}</span>
             <span className="pt-2 ml-3 text-light" style = {{marginLeft: "0.5rem"}}>{moment(post.createdAt).fromNow()}</span>
@@ -42,7 +43,7 @@ function Post({
           <PostImage home={home} url = {post.image.url}/>
           <div className = "d-flex pt-2">
             
-            {state && state.user && post.likes && post.likes.includes(state.user._id) ? 
+            {state && state.user && post.likes && (singlePost ? post.likes.some(person=> person._id == state.user._id) : post.likes.includes(state.user._id)) ? 
             (
               <>
                 <HeartFilled
@@ -59,7 +60,7 @@ function Post({
                 style={{cursor: !home? "pointer": ""}} 
                 className = "text-danger pt-2 h5 px-2"
                 />  
-              </>
+              </>         
             )}
 
             
@@ -89,15 +90,14 @@ function Post({
               </div>
               )
             }
-              
-              </div>
+            </div>
 
             {state && state.user && state.user._id === post.postedBy._id && !home && (
               <>
                 <EditOutlined 
                 style={{cursor: "pointer"}}
                 onClick={()=> router.push(`/user/post/${post._id}`)}
-                className = "text-danger pt-2 h5 px-2 mx-auto"/>
+                className = "text-danger pt-2 h5 px-2"/>
                 <DeleteOutlined 
                 onClick={()=>{handleDelete(post)}}
                 className = "text-danger pt-2 h5 px-2" 
@@ -109,18 +109,22 @@ function Post({
         
           <ul 
           className = "list-group"
-          style = {{maxHeight: "150px", overflow: singlePost ? "scroll": "", overflowX: "hidden"}}    
+          style = {{maxHeight: "150px", overflow: singlePost ? "scroll": "", overflowX: singlePost ?"hidden" : ""}}    
           >
             {post.comments.length > 0 && post.comments.slice(0,commentsCount).map((comment)=>(
-              <li key = {comment._id} className = "list-group-item d-flex justify-content-between align-items-center">
+              <li key = {comment._id} className = "list-group-item d-flex justify-content-between align-items-center" style={{background: "#202020"}}>
                 
                 <div className = "ms-2 me-auto">
-                  <div className = "font-weight-bold">
+                  <div className = "font-weight-bold text-light">
                     <Avatar size = {20} className ="mb-1 mr-3" 
                     src={imageSource(comment.postedBy)}
                     />
+                    <div style = {{display: "inline", paddingLeft: "10px"}}>
+                      {comment.postedBy.username}
+                    </div>
+                    
                   </div>
-                  <div>{comment.text}</div>
+                  <div className = "text-light">{comment.text}</div>
                 </div>
                 
                 <span className = "badge rounded-pill text-muted">
